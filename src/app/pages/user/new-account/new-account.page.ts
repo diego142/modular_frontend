@@ -19,6 +19,7 @@ export class NewAccountPage implements OnInit {
   }
 
   addUser() {
+
     this.userService.postUser(this.user).subscribe(async (res) => {
       if (res.status) {
         const alert = await this.alertController.create({
@@ -38,9 +39,14 @@ export class NewAccountPage implements OnInit {
 
         await alert.present();
 
+      } else {
+        console.log(res.data);
+
       }
     }, (err) => {
       console.log(err);
     });
   }
+
+
 }
