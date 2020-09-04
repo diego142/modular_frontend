@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+<img class="logotipo" src="assets/icon/logotipo.png">
+  
+<ion-item>
+    <ion-label position="floating"><ion-icon name="mail-outline"></ion-icon> Correo electrónico </ion-label>
+    <ion-input type="email" name="email" [(ngModel)]="user.email" required></ion-input>
+</ion-item>
+  
+<ion-item>
+    <ion-label position="floating"> <ion-icon name="chevron-forward-circle-outline"></ion-icon> Contraseña </ion-label>
+    <ion-input type="password" name="password" [(ngModel)]="user.password" required></ion-input>
+</ion-item>
+
+<ion-button class="button" mode="ios" (click)="verifyUser()" type="submit">Entrar</ion-button>
+
+<div class="links">
+  <a routerLink="/lost-password">¿Olvidaste tu contraseña?</a><br><br>
+  <a routerLink="/new-account">Crear Cuenta Nueva</a>
+</div>
+  
+</ion-content>   

@@ -4,28 +4,26 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },  {
-    path: 'nav-bar',
-    loadChildren: () => import('./nav-bar/nav-bar.module').then( m => m.NavBarPageModule)
-  },
-  {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/user/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'lost-password',
-    loadChildren: () => import('./lost-password/lost-password.module').then( m => m.LostPasswordPageModule)
+    loadChildren: () => import('./pages/user//lost-password/lost-password.module').then( m => m.LostPasswordPageModule)
   },
   {
     path: 'new-account',
-    loadChildren: () => import('./new-account/new-account.module').then( m => m.NewAccountPageModule)
+    loadChildren: () => import('./pages/user/new-account/new-account.module').then( m => m.NewAccountPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   }
+
 
 ];
 
