@@ -12,6 +12,7 @@ import { ToastController } from '@ionic/angular';
 export class LoginPage implements OnInit {
 
   user = new User();
+
   constructor(private userService: UserService, private router: Router, public toastController: ToastController) { }
 
   ngOnInit() {
@@ -20,7 +21,7 @@ export class LoginPage implements OnInit {
   async welcomeToast() {
     const toast = await this.toastController.create({
       message: 'Bienvenido al foro!',
-      color: "primary",
+      color: 'primary',
       duration: 2000
     });
     toast.present();
@@ -29,7 +30,7 @@ export class LoginPage implements OnInit {
   async failedToast() {
     const toast = await this.toastController.create({
       message: 'Contraseña incorrecta!',
-      color: "primary",
+      color: 'primary',
       duration: 3000
     });
     toast.present();
@@ -39,36 +40,36 @@ export class LoginPage implements OnInit {
     const toast = await this.toastController.create({
       header: 'Email no registrado!',
       message: 'Intenta de nuevo o crea una cuenta para poder entrar!',
-      color: "primary",
+      color: 'primary',
       duration: 4000
     });
     toast.present();
   }
 
-  verifyUser(){
-    this.userService.getUser(this.user.email).subscribe( (res) =>{
-        if(res.data == null){
-          this.failedEmailToast();
+  verifyUser() {
+    this.userService.getUser(this.user.email).subscribe((res) => {
+      if (res.data == null) {
+        this.failedEmailToast();
+        this.router.navigate(['/login']);
+        this.user.email = '';
+        this.user.password = '';
+      }
+      else {
+        if (res.data.password === this.user.password) {
+          this.welcomeToast();
+          this.router.navigate(['../../home']);
+        }
+        else {
+          this.failedToast();
           this.router.navigate(['/login']);
-          this.user.email = "";
-          this.user.password = "";
+          this.user.password = '';
         }
-        else{
-          if(res.data.password == this.user.password){
-            this.welcomeToast();
-            this.router.navigate(['../../home']);
-          }
-          else {
-            this.failedToast();
-            this.router.navigate(['/login']);
-            this.user.password = "";
-          }
-        }
-      },
-      (err) =>{
+      }
+    },
+      (err) => {
         console.log(err);
       }
-    )
+    );
   }
 
 }

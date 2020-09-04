@@ -12,14 +12,15 @@ import { Router } from '@angular/router';
 export class NewAccountPage implements OnInit {
 
   user = new User();
-  constructor(private userService: UserService, public alertController: AlertController, private router: Router ) { }
+
+  constructor(private userService: UserService, public alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
   }
 
-  addUser(){
-    this.userService.postUser(this.user).subscribe( async(res) => {
-      if(res.status){
+  addUser() {
+    this.userService.postUser(this.user).subscribe(async (res) => {
+      if (res.status) {
         const alert = await this.alertController.create({
           cssClass: 'my-custom-class',
           header: 'Exito!',
@@ -31,14 +32,15 @@ export class NewAccountPage implements OnInit {
             cssClass: 'secondary',
             handler: () => {
               this.router.navigate(['/login']);
-            }}]
+            }
+          }]
         });
-    
+
         await alert.present();
-        
+
       }
     }, (err) => {
-      console.log(err);      
+      console.log(err);
     });
   }
 }
