@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'src/app/models/event';
 import { EventService } from 'src/app/services/event.service';
 import { AlertController } from '@ionic/angular';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-event-form',
@@ -16,7 +17,7 @@ export class EventFormPage implements OnInit {
   event: Event = new Event();
 
   constructor(private activatedRoute: ActivatedRoute, private eventService: EventService,
-              private router: Router, private alertController: AlertController) { }
+    private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -43,7 +44,7 @@ export class EventFormPage implements OnInit {
       this.eventService.getEventById(id).subscribe((res) => {
         if (res.status) {
           this.event = res.data;
-        }else{
+        } else {
           this.navigateAlert('¡ERROR AL OBTENER!', 'Hubo un problema al intentar obtener la informacion de este evento', 'OK', 'events');
         }
       }, (err) => {
@@ -55,15 +56,28 @@ export class EventFormPage implements OnInit {
   }
 
   createEvent() {
-    this.event.user = '';
+    this.event.user._id = this.getUserIdStorage();
     this.event.open = true;
     this.event.date = new Date();
+
 
     console.log(this.event);
 
 
-  }
+    this.eventService.createEvent(this.event).subscribe((res) => {
 
+      if (res.status) {
+        this.navigateAlert('¡EVENTO CREADO!', 'Creaste un nuevo evento', 'OK', 'events');
+      } else {
+
+        this.navigateAlert('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear el evento', 'OK', 'events');
+      }
+    }, (err) => {
+      this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'events');
+    });
+
+
+  }
 
   updateEvent() {
     this.eventService.updateEvent(this.event).subscribe((res) => {
@@ -79,4 +93,7 @@ export class EventFormPage implements OnInit {
 
   }
 
+  getUserIdStorage() {
+    return localStorage.getItem('user_id');
+  }
 }
