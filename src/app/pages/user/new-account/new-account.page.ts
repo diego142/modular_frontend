@@ -3,6 +3,7 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-account',
@@ -13,9 +14,26 @@ export class NewAccountPage implements OnInit {
 
   user = new User();
 
-  constructor(private userService: UserService, public alertController: AlertController, private router: Router) { }
+  constructor(private userService: UserService, public alertController: AlertController, 
+    private router: Router, public toastController: ToastController) { }
 
   ngOnInit() {
+  }
+
+
+  async failedAccount(head: string, subHead: string, btnTex: string, navigate: string) {
+    const alert = await this.alertController.create({
+      header: head,
+      subHeader: subHead,
+      buttons: [{
+        text: btnTex,
+        handler: () => {
+          this.router.navigate(['/' + navigate + '/']);
+        }
+      }]
+    });
+
+    await alert.present();
   }
 
   addUser() {
@@ -39,12 +57,9 @@ export class NewAccountPage implements OnInit {
 
         await alert.present();
 
-      } else {
-        console.log(res.data);
-
       }
     }, (err) => {
-      console.log(err);
+      this.failedAccount('ERROR DE SERVIDOR', err.message, 'OK', 'new-account');
     });
   }
 

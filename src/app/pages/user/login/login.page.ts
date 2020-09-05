@@ -3,6 +3,7 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -13,33 +14,31 @@ export class LoginPage implements OnInit {
 
   user = new User();
 
-  constructor(private userService: UserService, private router: Router, public toastController: ToastController) { }
+  constructor(private userService: UserService, private router: Router,
+     public toastController: ToastController, private alertController: AlertController) { }
 
   ngOnInit() {
   }
 
-  async welcomeToast() {
-    const toast = await this.toastController.create({
-      message: 'Bienvenido al foro!',
-      color: 'primary',
-      duration: 2000
+  async errorLogin(head: string, subHead: string, btnTex: string, navigate: string) {
+    const alert = await this.alertController.create({
+      header: head,
+      subHeader: subHead,
+      buttons: [{
+        text: btnTex,
+        handler: () => {
+          this.router.navigate(['/' + navigate + '/']);
+        }
+      }]
     });
-    toast.present();
+
+    await alert.present();
   }
 
-  async failedToast() {
+  async toast(head: string, msg: string) {
     const toast = await this.toastController.create({
-      message: 'Contraseña incorrecta!',
-      color: 'primary',
-      duration: 3000
-    });
-    toast.present();
-  }
-
-  async failedEmailToast() {
-    const toast = await this.toastController.create({
-      header: 'Email no registrado!',
-      message: 'Intenta de nuevo o crea una cuenta para poder entrar!',
+      header: head,
+      message: msg,
       color: 'primary',
       duration: 4000
     });
@@ -49,26 +48,26 @@ export class LoginPage implements OnInit {
   verifyUser() {
     this.userService.getUser(this.user.email).subscribe((res) => {
       if (res.data == null) {
-        this.failedEmailToast();
+        this.toast('Email no registrado!', 'Intenta de nuevo o crea una cuenta para poder entrar!');
         this.router.navigate(['/login']);
         this.user.email = '';
         this.user.password = '';
       }
       else {
         if (res.data.password === this.user.password) {
-          this.welcomeToast();
+          this.toast('Bienvenido al foro', '');
           this.setStorageUser(res.data._id);
           this.router.navigate(['../../home']);
         }
         else {
-          this.failedToast();
+          this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email');
           this.router.navigate(['/login']);
           this.user.password = '';
         }
       }
     },
       (err) => {
-        console.log(err);
+        this.errorLogin('ERROR DE SERVIDOR', err.message, 'OK', 'login');
       }
     );
   }
