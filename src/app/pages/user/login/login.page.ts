@@ -57,6 +57,7 @@ export class LoginPage implements OnInit {
       else {
         if (res.data.password === this.user.password) {
           this.welcomeToast();
+          this.setStorageUser(res.data._id);
           this.router.navigate(['../../home']);
         }
         else {
@@ -70,6 +71,10 @@ export class LoginPage implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  setStorageUser(id: string) {
+    localStorage.setItem('user_id', id);
   }
 
 }

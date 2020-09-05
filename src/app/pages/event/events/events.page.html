@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Eventos
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <!--     <ion-card *ngFor="let event of eventService.eventList">
+      <ion-card-header>
+        <ion-card-subtitle> 
+          <ion-item lines="full">
+            <ion-text color="medium" slot="start"> {{ event.user.name + ' ' + event.user.lastName }} </ion-text>
+            <ion-text color="medium" slot="end"> {{ event.date | date: 'MMM d, y'}} </ion-text>
+          </ion-item>          
+        </ion-card-subtitle>
+        <ion-card-title class="ion-text-center">
+          <span style="font-size: 30px">{{event.title}}</span>
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <span style="font-size: 22px">
+          {{event.body}}
+        </span>
+      </ion-card-content>
+    </ion-card> -->
+
+    <ion-card *ngFor="let event of eventService.eventList">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+        </ion-avatar>
+        <ion-label>
+          <h3>{{event.user.name + ' ' + event.user.lastName}}</h3>
+          <p>{{event.date | date: 'MMM d, y'}}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-card-header>
+        <ion-card-title>{{ event.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{event.body}}
+      </ion-card-content>
+
+      <ion-footer>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-button color="secondary" (click)="editEvent(event._id)"> EDITAR 
+              <ion-icon name="create"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col class="ion-text-center">
+            <ion-button color="danger" (click)="closeEvent(event._id)"> CERRAR 
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-footer>
+    </ion-card>
+
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size="small" color="success" routerLink="/event-form/0">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

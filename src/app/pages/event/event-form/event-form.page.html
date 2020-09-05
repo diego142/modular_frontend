@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div class="ion-text-center"> Nuevo Evento </div>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <div class="ion-text-center" style="font-size: 24px;">
+      <h1>
+        Recuerda que todos los usuarios de la aplicacion podran ver lo eventos que publiques
+      </h1>
+    </div>
+  </ion-item>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>Fecha de inicio:</ion-label>
+      <ion-datetime [value]="today" displayFormat="MMMM DD, YYYY" display-timezone="utc" readonly></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" color="medium">Titulo del evento:</ion-label>
+      <ion-input type="text" name="title" [(ngModel)]="event.title" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" color="medium">Información:</ion-label>
+      <ion-textarea name="body" [(ngModel)]="event.body" required></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+  <section>
+    <ion-button *ngIf="id == '0'; else elseOpt" mode="ios" expand="block" color="success" (click)="createEvent()">
+      PUBLICAR 
+    </ion-button>
+    <ng-template #elseOpt>
+      <ion-button mode="ios" expand="block" (click)="updateEvent()"> ACTUALIZAR </ion-button>
+    </ng-template>
+  </section>
+</ion-content>

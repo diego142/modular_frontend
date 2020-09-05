@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,11 +10,11 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/user/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/user/login/login.module').then( m => m.LoginPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'lost-password',
-    loadChildren: () => import('./pages/user//lost-password/lost-password.module').then( m => m.LostPasswordPageModule)
+    loadChildren: () => import('./pages/user/lost-password/lost-password.module').then( m => m.LostPasswordPageModule)
   },
   {
     path: 'new-account',
@@ -22,7 +23,16 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'events',
+    loadChildren: () => import('./pages/event/events/events.module').then( m => m.EventsPageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'event-form/:id',
+    loadChildren: () => import('./pages/event/event-form/event-form.module').then( m => m.EventFormPageModule)
   }
+
 
 
 ];

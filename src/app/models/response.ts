@@ -1,5 +1,5 @@
 export class Response <T> {
     status: boolean;
-    message: String;
+    message: string;
     data: T;
 }
