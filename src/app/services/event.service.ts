@@ -36,7 +36,7 @@ export class EventService {
   }
 
   closeEvent(id: string): Observable<Response<string>> {
-    return this.http.put<Response<string>>(environment.URL + 'event/' + id, null);
+    return this.http.delete<Response<string>>(environment.URL + 'event/' + id);
   }
 
 }

@@ -11,25 +11,12 @@
 <ion-content>
 
   <ion-list>
-    <!--     <ion-card *ngFor="let event of eventService.eventList">
-      <ion-card-header>
-        <ion-card-subtitle> 
-          <ion-item lines="full">
-            <ion-text color="medium" slot="start"> {{ event.user.name + ' ' + event.user.lastName }} </ion-text>
-            <ion-text color="medium" slot="end"> {{ event.date | date: 'MMM d, y'}} </ion-text>
-          </ion-item>          
-        </ion-card-subtitle>
-        <ion-card-title class="ion-text-center">
-          <span style="font-size: 30px">{{event.title}}</span>
-        </ion-card-title>
-      </ion-card-header>
 
-      <ion-card-content>
-        <span style="font-size: 22px">
-          {{event.body}}
-        </span>
-      </ion-card-content>
-    </ion-card> -->
+    <ion-text *ngIf="listEmpty()" color="medium">
+      <div style="font-size: 24px" class="ion-text-center">
+        No hay eventos disponibles.
+      </div>
+    </ion-text>
 
     <ion-card *ngFor="let event of eventService.eventList">
       <ion-item>
@@ -57,7 +44,7 @@
             </ion-button>
           </ion-col>
           <ion-col class="ion-text-center">
-            <ion-button color="danger" (click)="closeEvent(event._id)"> CERRAR 
+            <ion-button color="danger" (click)="confirmClose(event._id)"> CERRAR 
               <ion-icon name="close-circle"></ion-icon>
             </ion-button>
           </ion-col>

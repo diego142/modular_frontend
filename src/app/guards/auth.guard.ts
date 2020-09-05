@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, generate } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { AlertController } from '@ionic/angular';
 
@@ -41,17 +41,11 @@ export class AuthGuard implements CanActivate {
     return new Promise((resolve, reject) => {
       this.userService.getUserById(id).subscribe((res) => {
         if (res.status && res.data !== null) {
-          console.log('if', res);
-
           resolve(true);
         } else {
-          console.log('else', res);
-
           resolve(false);
         }
       }, (err) => {
-        console.log('err', err);
-
         reject(false);
       });
     });
@@ -66,7 +60,6 @@ export class AuthGuard implements CanActivate {
 
     await alert.present();
     localStorage.removeItem('user_id');
-
   }
 
 }

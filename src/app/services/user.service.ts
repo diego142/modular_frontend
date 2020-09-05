@@ -24,7 +24,6 @@ export class UserService {
 
   getUserById(id: string) {
     return this.http.get<Response<User>>(this.URL_API + `/id/${id}`);
-
   }
 
   postUser(user: User) {
@@ -35,8 +34,8 @@ export class UserService {
     return this.http.put(this.URL_API, user);
   }
 
-  deleteUser(_id: string) {
-    return this.http.delete(this.URL_API + `/${_id}`);
+  deleteUser(id: string) {
+    return this.http.delete(this.URL_API + `/${id}`);
   }
 
 }

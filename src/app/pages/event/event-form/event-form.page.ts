@@ -60,10 +60,6 @@ export class EventFormPage implements OnInit {
     this.event.open = true;
     this.event.date = new Date();
 
-
-    console.log(this.event);
-
-
     this.eventService.createEvent(this.event).subscribe((res) => {
 
       if (res.status) {
@@ -75,8 +71,6 @@ export class EventFormPage implements OnInit {
     }, (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'events');
     });
-
-
   }
 
   updateEvent() {
@@ -86,7 +80,6 @@ export class EventFormPage implements OnInit {
       } else {
         this.navigateAlert('¡ERROR AL MODIFICAR!', 'Hubo un problema al modificar este evento', 'OK', 'events');
       }
-
     }, (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'events');
     });
