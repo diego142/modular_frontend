@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
   user = new User();
 
   constructor(private userService: UserService, private router: Router,
-     public toastController: ToastController, private alertController: AlertController) { }
+              public toastController: ToastController, private alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -35,12 +35,12 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  async toast(head: string, msg: string) {
+  async toast(head: string, msg: string, time: number) {
     const toast = await this.toastController.create({
       header: head,
       message: msg,
       color: 'primary',
-      duration: 4000
+      duration: time
     });
     toast.present();
   }
@@ -48,19 +48,19 @@ export class LoginPage implements OnInit {
   verifyUser() {
     this.userService.getUser(this.user.email).subscribe((res) => {
       if (res.data == null) {
-        this.toast('Email no registrado!', 'Intenta de nuevo o crea una cuenta para poder entrar!');
+        this.toast('Email no registrado!', 'Intenta de nuevo o crea una cuenta para poder entrar!', 4000);
         this.router.navigate(['/login']);
         this.user.email = '';
         this.user.password = '';
       }
       else {
         if (res.data.password === this.user.password) {
-          this.toast('Bienvenido al foro', '');
+          this.toast('Bienvenido al foro', '', 1000);
           this.setStorageUser(res.data._id);
           this.router.navigate(['../../home']);
         }
         else {
-          this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email');
+          this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email', 2000);
           this.router.navigate(['/login']);
           this.user.password = '';
         }
