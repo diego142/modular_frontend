@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pregunta - {{ (question.open) ? 'Abierta' : 'Cerrada' }}
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{question.user.name + ' ' + question.user.lastName}}</h3>
+        <p>{{question.date | date: 'MMM d, y'}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-card-header>
+      <ion-card-title> <strong> {{ question.title }} </strong></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{question.body}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item lines="full">
+      <ion-text color="medium">Respuestas:</ion-text>
+    </ion-item>
+    <ion-item *ngFor="let reply of question.replys">
+      <ion-avatar slot="start">
+        <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+      </ion-avatar>
+      <ion-button *ngIf="reply.user._id == userId" slot="end" color="danger" (click)="confirmRemoveReply(reply._id)"><ion-icon name="trash" ></ion-icon></ion-button>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="primary">
+          <h3> <strong> {{reply.user.name + ' ' + reply.user.lastName}} </strong> </h3>
+        </ion-text>
+        <p>{{reply.date | date: 'MMM d, y - H:mm'}}</p>
+        <ion-text color="dark">
+          <span>{{ reply.reply }}</span>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+<ion-footer>
+  <form #formReply="ngForm">
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+      </ion-avatar>
+      <ion-textarea rows="3" placeholder="Respoder a esta pregunta" name="reply" [(ngModel)]="reply.reply" minlength="2"
+        required></ion-textarea>
+      <ion-button [disabled]="!formReply.valid" style="margin-top: 25px;" slot="end" color="light"
+        (click)="confirmAddReply()">
+        <ion-icon name="send" color="primary"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </form>
+</ion-footer>

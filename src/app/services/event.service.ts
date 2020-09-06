@@ -26,7 +26,6 @@ export class EventService {
     return this.http.get<Response<Event>>(environment.URL + 'event/' + id);
   }
 
-
   createEvent(event: Event): Observable<Response<Event>> {
     return this.http.post<Response<Event>>(environment.URL + 'event', event);
   }

@@ -31,10 +31,20 @@ const routes: Routes = [
   {
     path: 'event-form/:id',
     loadChildren: () => import('./pages/event/event-form/event-form.module').then( m => m.EventFormPageModule)
-  },  {
+  },
+  {
     path: 'abilities',
     loadChildren: () => import('./pages/user/abilities/abilities.module').then( m => m.AbilitiesPageModule)
+  },
+  {
+    path: 'questions',
+    loadChildren: () => import('./pages/question/questions/questions.module').then( m => m.QuestionsPageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'question-view/:id',
+    loadChildren: () => import('./pages/question/question-view/question-view.module').then( m => m.QuestionViewPageModule)
   }
+
 
 
 

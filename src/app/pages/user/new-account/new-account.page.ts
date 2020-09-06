@@ -37,7 +37,7 @@ export class NewAccountPage implements OnInit {
   }
 
   addUser() {
-
+    this.user.active = true;
     this.userService.postUser(this.user).subscribe(async (res) => {
       if (res.status) {
         const alert = await this.alertController.create({
@@ -58,6 +58,8 @@ export class NewAccountPage implements OnInit {
         await alert.present();
 
       }
+      console.log(res);
+      
     }, (err) => {
       this.failedAccount('ERROR DE SERVIDOR', err.message, 'OK', 'new-account');
     });

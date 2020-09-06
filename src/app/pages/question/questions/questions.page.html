@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Preguntas
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <ion-item class="select" *ngFor="let question of questionService.questionList" (click)="viewQuestion(question._id)">
+      <ion-avatar slot="start">
+        <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+      </ion-avatar>
+      <ion-text slot="end" color="medium"> {{question.date | date: 'd/M/yyyy'}} </ion-text>
+      <ion-label>
+        <ion-text color="primary">
+          <h2> <strong> {{ question.user.name + ' ' + question.user.lastName }} </strong></h2>
+        </ion-text>
+        <h2> {{ question.title }} </h2>
+        <ion-text color="medium">
+          <span>{{ question.body }}</span>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

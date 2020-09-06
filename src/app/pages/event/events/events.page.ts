@@ -11,8 +11,10 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class EventsPage implements OnInit {
 
+  private userId: string;
+
   constructor(private eventService: EventService, private router: Router, private alertController: AlertController,
-    private toastController: ToastController) {
+              private toastController: ToastController) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -22,6 +24,7 @@ export class EventsPage implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.getEvents();
+        this.userId = this.getUserIdStorage();
       }
     });
   }
@@ -69,7 +72,6 @@ export class EventsPage implements OnInit {
 
   editEvent(id: string) {
     this.router.navigate(['/event-form/' + id]);
-
   }
 
   closeEvent(id: string) {
@@ -89,6 +91,10 @@ export class EventsPage implements OnInit {
     } else {
       return false;
     }
+  }
+
+  getUserIdStorage() {
+    return localStorage.getItem('user_id');
   }
 
 }

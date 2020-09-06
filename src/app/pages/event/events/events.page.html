@@ -36,7 +36,7 @@
         {{event.body}}
       </ion-card-content>
 
-      <ion-footer>
+      <ion-footer *ngIf="event.user._id == userId">
         <ion-row>
           <ion-col class="ion-text-center">
             <ion-button color="secondary" (click)="editEvent(event._id)"> EDITAR 
