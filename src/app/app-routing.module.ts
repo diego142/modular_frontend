@@ -32,10 +32,9 @@ const routes: Routes = [
     path: 'event-form/:id',
     loadChildren: () => import('./pages/event/event-form/event-form.module').then( m => m.EventFormPageModule)
   },  {
-    path: 'abilities',
-    loadChildren: () => import('./pages/user/abilities/abilities.module').then( m => m.AbilitiesPageModule)
-  }
-
+    path: 'skills',
+    loadChildren: () => import('./pages/user/skills/skills.module').then( m => m.SkillsPageModule)
+  },
 
 
 

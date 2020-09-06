@@ -8,6 +8,7 @@
 
 <img class="logotipo" src="assets/icon/logotipo.png">
   
+<form #formLogin="ngForm">
 <ion-item>
     <ion-label position="floating"><ion-icon name="mail-outline"></ion-icon> Correo electrónico </ion-label>
     <ion-input type="email" name="email" [(ngModel)]="user.email" required></ion-input>
@@ -17,8 +18,9 @@
     <ion-label position="floating"> <ion-icon name="chevron-forward-circle-outline"></ion-icon> Contraseña </ion-label>
     <ion-input type="password" name="password" [(ngModel)]="user.password" required></ion-input>
 </ion-item>
+</form>
 
-<ion-button class="button" mode="ios" (click)="verifyUser()" type="submit">Entrar</ion-button>
+<ion-button class="button" mode="ios" (click)="verifyUser()" type="submit" [disabled]="!formLogin.valid">Entrar</ion-button>
 
 <div class="links">
   <a routerLink="/lost-password">¿Olvidaste tu contraseña?</a><br><br>

@@ -16,22 +16,22 @@
 
     <ion-item>
       <ion-label position="floating"> Apellido </ion-label>
-      <ion-input type="text" [(ngModel)]="user.lastName" name="usuario" required></ion-input>
+      <ion-input type="text" [(ngModel)]="user.lastName" name="apellido" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating"> edad </ion-label>
-      <ion-input type="number" [(ngModel)]="user.age" name="usuario" required></ion-input>
+      <ion-label position="floating"> Edad </ion-label>
+      <ion-input type="number" [(ngModel)]="user.age" name="edad" id="age" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating"> code </ion-label>
-      <ion-input type="text" [(ngModel)]="user.code" name="usuario" required></ion-input>
+      <ion-label position="floating"> Codigo </ion-label>
+      <ion-input type="text" [(ngModel)]="user.code" name="codigo" id="code" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating"> Carrera </ion-label>
-      <ion-input type="text" [(ngModel)]="user.career" name="usuario" required></ion-input>
+      <ion-input type="text" [(ngModel)]="user.career" name="carrera" required></ion-input>
     </ion-item>
 
     <ion-item>
@@ -46,11 +46,11 @@
 
     <ion-item>
       <ion-label position="floating"> Repita su contraseña </ion-label>
-      <ion-input type="password" name="password2" required></ion-input>
+      <ion-input type="password" name="password2" (keyup)="verifyPassword($event.target.value)"required></ion-input>
     </ion-item>
 
   </form>
-  <ion-button mode="ios" (click)="addUser()" class="button" type="submit" [disabled]="!formLogin.valid">Registrar</ion-button>
+  <ion-button mode="ios" (click)="addUser()" class="button" type="submit" [disabled]="!(formLogin.valid && (bandera==true))" id="btn">Registrar</ion-button>
 
   <div class="iniciar">
     <p>¿Ya tienes una cuenta?</p>
