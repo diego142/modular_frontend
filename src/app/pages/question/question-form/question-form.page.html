@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nueva pregunta
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="events"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #formQuestion="ngForm">
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Fecha:</ion-label>
+        <ion-datetime [value]="today" displayFormat="MMMM DD, YYYY" display-timezone="utc" readonly></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating" color="medium">Tu pregunta:</ion-label>
+        <ion-input type="text" name="title" [(ngModel)]="question.title" minlength="8" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating" color="medium">Agrega mas detalles sobre la pregunta:</ion-label>
+        <ion-textarea name="body" [(ngModel)]="question.body" minlength="8" required></ion-textarea>
+      </ion-item>
+
+    </ion-list>
+  </form>
+
+  <div *ngIf="show">
+    <ion-item lines="full">
+      <ion-text color="secondary">Tu pregunta es de tipo:</ion-text>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-text color="secondary">Algunas preguntas que podrian interesarte:</ion-text>
+    </ion-item>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <h2> <strong> titulo </strong></h2>
+          <ion-text color="medium">
+            <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate quo doloremque, quod optio cumque
+              consequuntur et eum ducimus, sapiente doloribus molestias illo sed inventore sunt laudantium velit odio
+              odit assumenda!</span>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <section>
+    <ion-button *ngIf="this.questionId == '0'; else elseBtn" expand="full" color="success" 
+    (click)="createQuestion()" [disabled]="!formQuestion.valid">
+      PREGUNTAR
+    </ion-button>
+
+    <ng-template #elseBtn>
+      <ion-button expand="full" color="primary" (click)="updateQuestion()" [disabled]="!formQuestion.valid">
+        ACTUALIZAR
+      </ion-button>
+    </ng-template>
+
+
+  </section>
+
+
+</ion-content>

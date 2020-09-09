@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ayudar
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="events"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item lines="full">
+    <ion-text color="medium">
+      <div class="ion-text-center" style="margin-top: 10px;">
+        Apoya a la comunidad de alumnos contestando las preguntas de los demas,
+        asi nos apoyamos entre todos. Usa el filtro para buscar preguntas que se ajusten
+        a tus conocimientos
+      </div>
+    </ion-text>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-label>
+      <ion-text color="primary" style="font-size: 18px">Filtro:</ion-text>
+    </ion-label>
+
+    <ion-select interface="popover" (ionChange)="filter()" [(ngModel)]="selectText" [selectedText]="selectText">
+      <ion-select-option value="TODO">TODO</ion-select-option>
+      <ion-select-option *ngFor="let branch of branchList" [value]="branch.name">{{ branch.name }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item lines="full" *ngIf="tagsFilterList.length < 1; else elseList">
+    <ion-text color="medium">
+      <div> No hay preguntas abiertas sobre este tema. </div>
+    </ion-text>
+  </ion-item>
+
+  <ng-template #elseList>
+    <ion-list>
+      <ion-item class="select" *ngFor="let tag of tagsFilterList" (click)="viewQuestion(tag.question._id)">
+        <ion-avatar slot="start">
+          <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+        </ion-avatar>
+        <ion-text slot="end" color="medium"> {{tag.question.date |date: 'd/M/yyyy'}} </ion-text>
+        <ion-label>
+          <ion-text color="primary">
+            <h2> <strong>{{tag.question.user.name + ' ' + tag.question.user.lastName}} </strong></h2>
+          </ion-text>
+          <h2> {{tag.question.title}} </h2>
+          <ion-text color="medium">
+            <span> {{tag.question.body}} </span>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+
+
+
+
+</ion-content>

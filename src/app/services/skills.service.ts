@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Response } from '../models/response';
-import { Skills } from '../models/skills';
+import { Skill } from '../models/skill';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -9,31 +9,30 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class SkillsService {
 
-  public skillList: Skills[];
   constructor(private http: HttpClient) { }
 
   getSkills(){
-    return this.http.get<Response<Event[]>>(environment.URL + 'skill/');
+    return this.http.get<Response<Skill[]>>(environment.URL + 'skill/');
   }
 
   getSkill(id: string) {
-    return this.http.get<Response<Event[]>>(environment.URL + 'skill/' + id);
+    return this.http.get<Response<Skill>>(environment.URL + 'skill/' + id);
   }
 
-  createSkills() {
-    return this.http.get<Response<Event[]>>(environment.URL + 'skill/');
+  createSkill(skill: Skill) {
+    return this.http.post<Response<Skill>>(environment.URL + 'skill/', skill);
   }
 
-  addSkill(id: string, idSkill: string){
-    return this.http.get<Response<Event[]>>(environment.URL + 'skill/' + id + idSkill);
+  updateSkill(skill: Skill){
+    return this.http.put<Response<Skill>>(environment.URL + 'skill/', skill);
   }
 
-  updateSkill(){
-    return this.http.get<Response<Event[]>>(environment.URL + 'skill/');
+  addSkill(idSkill: string, idBranch: string){
+    return this.http.put<Response<Skill>>(environment.URL + 'skill/' + idSkill + '/' + idBranch, null);
   }
 
-  deleteSkill(id: string, idSkill: string){
-    return this.http.get<Response<Event[]>>(environment.URL + 'skill/' + id + idSkill);
+  deleteSkill(idSkill: string, idBranch: string){
+    return this.http.delete<Response<Skill>>(environment.URL + 'skill/' + idSkill + '/' + idBranch);
   }
 
 }

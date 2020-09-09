@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis preguntas
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="events"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item lines="full">
+    <ion-button color="success" expand="block" slot="end" (click)="newQuestion()">
+      Pregunta
+      <ion-icon style="margin-left: 8px; margin-bottom: 2px;" name="add-circle"></ion-icon>
+    </ion-button>
+    <ion-label> <strong> Haz tu pregunta aqui. </strong> </ion-label>
+  </ion-item>
+
+  <ion-text color="medium">
+    <div class="ion-text-center" style="margin-top: 10px;">
+      {{( myQuestions.length < 1) ? 'Aun no has hecho ninguna pregunta' : 'Tus preguntas.'}}
+    </div>
+  </ion-text>
+
+  <ion-list>
+
+    <ion-card *ngFor="let question of myQuestions">
+      <ion-card-header>
+        <ion-card-title>{{ question.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content> {{ question.body }} </ion-card-content>
+
+      <ion-footer>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-button color="tertiary" (click)="viewQuestion(question._id)"> VER
+              <ion-icon name="eye"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col *ngIf="question.open" class="ion-text-center">
+            <ion-button color="secondary" (click)="updateQuestion(question._id)"> EDITAR
+              <ion-icon name="create"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col *ngIf="question.open" class="ion-text-center">
+            <ion-button color="success" (click)="confirmClose(question._id)"> CERRAR
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-footer>
+    </ion-card>
+
+  </ion-list>
+
+</ion-content>

@@ -33,16 +33,33 @@ const routes: Routes = [
     loadChildren: () => import('./pages/event/event-form/event-form.module').then( m => m.EventFormPageModule)
   },
   {
-    path: 'skills',
-    loadChildren: () => import('./pages/user/skills/skills.module').then( m => m.SkillsPageModule)
-  },
-  {
     path: 'questions',
     loadChildren: () => import('./pages/question/questions/questions.module').then( m => m.QuestionsPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'question-view/:id',
     loadChildren: () => import('./pages/question/question-view/question-view.module').then( m => m.QuestionViewPageModule)
+  },
+  {
+    path: 'my-questions',
+    loadChildren: () => import('./pages/question/my-questions/my-questions.module').then( m => m.MyQuestionsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'question-form/:id',
+    loadChildren: () => import('./pages/question/question-form/question-form.module').then( m => m.QuestionFormPageModule)
+  },
+  {
+    path: 'help',
+    loadChildren: () => import('./pages/help/help/help.module').then( m => m.HelpPageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'tag-form/:id',
+    loadChildren: () => import('./pages/tag/tag-form/tag-form.module').then( m => m.TagFormPageModule)
+  },
+  {
+    path: 'skill-form/:id',
+    loadChildren: () => import('./pages/skill/skill-form/skill-form.module').then( m => m.SkillFormPageModule)
   }
 
 

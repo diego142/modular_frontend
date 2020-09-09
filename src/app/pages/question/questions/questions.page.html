@@ -5,11 +5,20 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="events"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
+
+    <ion-text *ngIf="questionService.questionList.length < 1" color="medium">
+      <div style="font-size: 24px" class="ion-text-center">
+        No hay preguntas disponibles.
+      </div>
+    </ion-text>
 
     <ion-item class="select" *ngFor="let question of questionService.questionList" (click)="viewQuestion(question._id)">
       <ion-avatar slot="start">

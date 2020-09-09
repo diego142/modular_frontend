@@ -1,7 +1,8 @@
 import { User } from './user';
 import { Branch } from './branch';
 
-export class Skills {
+export class Skill {
+    _id: string;
     user = new User();
-    skills: Branch[];
+    skills = new Array<Branch>();
 }

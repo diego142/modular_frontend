@@ -2,11 +2,11 @@ import { User } from './user';
 import { Reply } from './reply';
 
 export class Question {
-    _id: number;
+    _id: string;
     user = new User();
     title: string;
     body: string;
     date: Date;
     open: boolean;
-    replys: Reply[];
+    replys: Reply[] = new Array<Reply>();
 }

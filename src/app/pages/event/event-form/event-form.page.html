@@ -6,6 +6,9 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="events"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,9 +16,11 @@
 
   <ion-item>
     <div class="ion-text-center" style="font-size: 24px;">
-      <h1>
-        Recuerda que todos los usuarios de la aplicacion podran ver lo eventos que publiques
-      </h1>
+      <ion-text color="medium">
+        <h1>
+          Recuerda que todos los usuarios de la aplicacion podran ver lo eventos que publiques
+        </h1>
+      </ion-text>
     </div>
   </ion-item>
 
@@ -41,12 +46,12 @@
 </form>
 
   <section>
-    <ion-button *ngIf="id == '0'; else elseOpt" mode="ios" expand="full" color="success" 
+    <ion-button *ngIf="id == '0'; else elseOpt" expand="full" color="success" 
     [disabled]="!formEvent.valid" (click)="createEvent()">
       PUBLICAR 
     </ion-button>
     <ng-template #elseOpt>
-      <ion-button mode="ios" expand="block" (click)="updateEvent()"> ACTUALIZAR </ion-button>
+      <ion-button expand="full" (click)="updateEvent()"> ACTUALIZAR </ion-button>
     </ng-template>
   </section>
 </ion-content>

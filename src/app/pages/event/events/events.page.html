@@ -5,6 +5,9 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="events"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +15,7 @@
 
   <ion-list>
 
-    <ion-text *ngIf="listEmpty()" color="medium">
+    <ion-text *ngIf="eventService.eventList.length < 1" color="medium">
       <div style="font-size: 24px" class="ion-text-center">
         No hay eventos disponibles.
       </div>

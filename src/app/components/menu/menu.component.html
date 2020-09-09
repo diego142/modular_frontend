@@ -15,16 +15,23 @@
       </ion-menu-toggle>
 
       <ion-menu-toggle>
-        <ion-item>
-          <ion-icon name="heart-circle-outline" slot="start" color="primary"></ion-icon>
-          <ion-label>Ayudar</ion-label>
+        <ion-item routerLink="/events">
+          <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>Eventos</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
       <ion-menu-toggle>
-        <ion-item routerLink="/events">
-          <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
-          <ion-label>Eventos</ion-label>
+        <ion-item routerLink="/my-questions">
+          <ion-icon name="help-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>Mis preguntas</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+        <ion-item routerLink="/help">
+          <ion-icon name="heart-circle-outline" slot="start" color="primary"></ion-icon>
+          <ion-label>Ayudar</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
@@ -34,15 +41,6 @@
           <ion-label>Preguntas</ion-label>
         </ion-item>
       </ion-menu-toggle>
-
-      <ion-menu-toggle>
-        <ion-item>
-          <ion-icon name="help-outline" slot="start" color="primary"></ion-icon>
-          <ion-label>Mis preguntas</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-
 
     </ion-list>
   </ion-content>

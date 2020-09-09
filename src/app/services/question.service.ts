@@ -11,7 +11,7 @@ import { Reply } from '../models/reply';
 })
 export class QuestionService {
 
-  questionList: Question[];
+  questionList: Question[] = new Array<Question>();
 
   constructor(private http: HttpClient) { }
 
@@ -23,12 +23,20 @@ export class QuestionService {
     return this.http.get<Response<Question>>(environment.URL + 'question/' + id);
   }
 
+  getQuestionByUserId(id: string): Observable<Response<Question[]>> {
+    return this.http.get<Response<Question[]>>(environment.URL + 'question/user/' + id);
+  }
+
   createQuestion(question: Question): Observable<Response<Question>> {
     return this.http.post<Response<Question>>(environment.URL + 'question', question);
   }
 
   updateQuestion(question: Question): Observable<Response<Question>> {
     return this.http.put<Response<Question>>(environment.URL + 'question', question);
+  }
+
+  closeQuestion(id: string): Observable<Response<Question>> {
+    return this.http.delete<Response<Question>>(environment.URL + 'question/' + id);
   }
 
   addReply(questionId: string, reply: Reply): Observable<Response<Question>> {

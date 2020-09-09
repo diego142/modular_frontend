@@ -48,18 +48,16 @@ export class LoginPage implements OnInit {
   verifyUser() {
     this.userService.getUser(this.user.email).subscribe((res) => {
       if (res.data == null) {
-        this.toast('Email no registrado!', 'Intenta de nuevo o crea una cuenta para poder entrar!', 4000);
+        this.toast('Email no registrado!', 'Intenta de nuevo o crea una cuenta para poder entrar!', 3000);
         this.router.navigate(['/login']);
         this.user.email = '';
         this.user.password = '';
-      }
-      else {
+      } else {
         if (res.data.password === this.user.password) {
           this.toast('Bienvenido al foro', '', 1000);
           this.setStorageUser(res.data._id);
-          this.router.navigate(['../../home']);
-        }
-        else {
+          this.router.navigate(['/home']);
+        } else {
           this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email', 2000);
           this.router.navigate(['/login']);
           this.user.password = '';

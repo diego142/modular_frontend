@@ -5,6 +5,9 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="events"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -31,7 +34,7 @@
 
   <ion-list>
     <ion-item lines="full">
-      <ion-text color="medium">Respuestas:</ion-text>
+      <ion-text color="medium">{{(question.replys.length < 1) ? 'Nadie a respondido a esta pregunta todavia.' : 'Respuestas:'}}</ion-text>
     </ion-item>
     <ion-item *ngFor="let reply of question.replys">
       <ion-avatar slot="start">
@@ -52,7 +55,7 @@
 
 </ion-content>
 <ion-footer>
-  <form #formReply="ngForm">
+  <form *ngIf="question.open; else elseForm" #formReply="ngForm">
     <ion-item>
       <ion-avatar slot="start">
         <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
@@ -65,4 +68,12 @@
       </ion-button>
     </ion-item>
   </form>
+
+  <ng-template #elseForm>
+    <ion-text color="medium">
+      <div class="ion-text-center">
+        Pregunta cerrada, no puedes responder a esta pregunta.
+      </div>
+    </ion-text>
+  </ng-template>
 </ion-footer>

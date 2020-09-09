@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class EventService {
 
-  public eventList: Event[];
+  public eventList: Event[] = new Array<Event>();
 
   constructor(private http: HttpClient) { }
 

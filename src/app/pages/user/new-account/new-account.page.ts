@@ -59,35 +59,23 @@ export class NewAccountPage implements OnInit {
         this.bandera = true;
       }
     }
-    else{
+    else {
       this.bandera = false;
     }
-
-
   }
 
   addUser() {
     this.user.active = true;
+    this.user.age = 0;
+    this.user.code = ' ';
+    this.user.career = ' ';
+
     this.userService.postUser(this.user).subscribe(async (res) => {
       if (res.status) {
-        const alert = await this.alertController.create({
-          cssClass: 'my-custom-class',
-          header: 'Exito!',
-          subHeader: 'te haz registrado',
-          message: 'Ahora puedes iniciar sesión!.',
-          buttons: [{
-            text: 'Ok',
-            role: 'OK',
-            cssClass: 'secondary',
-            handler: () => {
-              this.router.navigate(['/skills']);
-            }
-          }]
-        });
-        await alert.present();
+        this.router.navigate(['/skill-form/' + res.data._id]);
+      } else {
+        this.failedAccount('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear este usuario', 'OK', 'login');        
       }
-      console.log(res);
-      
     }, (err) => {
       this.failedAccount('ERROR DE SERVIDOR', err.message, 'OK', 'new-account');
     });

@@ -3,6 +3,7 @@ import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event';
 import { Router, NavigationEnd } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-events',
@@ -14,7 +15,7 @@ export class EventsPage implements OnInit {
   private userId: string;
 
   constructor(private eventService: EventService, private router: Router, private alertController: AlertController,
-              private toastController: ToastController) {
+    private toastController: ToastController) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -29,9 +30,9 @@ export class EventsPage implements OnInit {
     });
   }
 
-  async eventClosed() {
+  async toast(msg: string) {
     const toast = await this.toastController.create({
-      message: 'El evento se ha cerrado.',
+      message: msg,
       duration: 1500
     });
     toast.present();
@@ -63,10 +64,8 @@ export class EventsPage implements OnInit {
   getEvents() {
     this.eventService.getEvents().subscribe((res) => {
       this.eventService.eventList = res.data;
-
     }, (err) => {
-      console.log(err);
-
+      this.toast('Problema al conectar la servidor.');
     });
   }
 
@@ -78,19 +77,10 @@ export class EventsPage implements OnInit {
     this.eventService.closeEvent(id).subscribe((res) => {
       const ind = this.eventService.eventList.findIndex(event => event._id === id);
       this.eventService.eventList.splice(ind, 1);
-      this.eventClosed();
-    }, (err) => {
-      console.log(err);
-
+      this.toast('El evento se ha cerrado.');
+    }, async (err) => {
+      this.toast('No se pudo cerrar el evento, revise su conexión.');
     });
-  }
-
-  listEmpty(): boolean {
-    if (this.eventService.eventList === undefined || this.eventService.eventList.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   getUserIdStorage() {
