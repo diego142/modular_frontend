@@ -60,6 +60,14 @@ const routes: Routes = [
   {
     path: 'skill-form/:id',
     loadChildren: () => import('./pages/skill/skill-form/skill-form.module').then( m => m.SkillFormPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/user/profile/profile.module').then( m => m.ProfilePageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'skill-update/:id',
+    loadChildren: () => import('./pages/skill/skill-update/skill-update.module').then( m => m.SkillUpdatePageModule)
   }
 
 

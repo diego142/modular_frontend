@@ -21,13 +21,12 @@ export class QuestionViewPage implements OnInit {
     private router: Router, private alertController: AlertController, private toastController: ToastController) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.questionId = this.activatedRoute.snapshot.params.id;
-        this.getQuestion(this.questionId);
-        this.userId = this.getUserIdStorage();
-      }
-    });
+  }
+
+  ionViewWillEnter() {
+    this.questionId = this.activatedRoute.snapshot.params.id;
+    this.getQuestion(this.questionId);
+    this.userId = this.getUserIdStorage();
   }
 
   async navigateAlert(head: string, subHead: string, btnTex: string, navigate: string) {
@@ -42,7 +41,6 @@ export class QuestionViewPage implements OnInit {
       }]
     });
   }
-
 
   getQuestion(id: string) {
 
@@ -70,7 +68,6 @@ export class QuestionViewPage implements OnInit {
       } else {
         this.navigateAlert('¡ERROR AL OBTENER!', 'Hubo un problema al intentar agregar esta pregunta', 'OK', 'questions');
       }
-
     }, (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'questions');
 

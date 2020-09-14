@@ -18,12 +18,11 @@ export class MyQuestionsPage implements OnInit {
               private alertController: AlertController, private toastController: ToastController) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.userId = this.getUserIdStorage();
-        this.getQuestions();
-      }
-    });
+  }
+
+  ionViewWillEnter() {
+    this.userId = this.getUserIdStorage();
+    this.getQuestions();
   }
 
   async toast(msg: string) {

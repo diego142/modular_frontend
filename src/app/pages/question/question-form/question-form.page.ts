@@ -22,14 +22,13 @@ export class QuestionFormPage implements OnInit {
               private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.questionId = this.activatedRoute.snapshot.params.id;
-        this.userId = this.getUserIdStorage();
-        this.getQuestion(this.questionId);
-        this.show = false;
-      }
-    });
+  }
+
+  ionViewWillEnter() {
+    this.questionId = this.activatedRoute.snapshot.params.id;
+    this.userId = this.getUserIdStorage();
+    this.getQuestion(this.questionId);
+    this.show = false;
   }
 
   async navigateAlert(head: string, subHead: string, btnTex: string, navigate: string) {

@@ -12,11 +12,10 @@ export class QuestionsPage implements OnInit {
   constructor(private questionService: QuestionService, private router: Router) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.getQuestions();
-      }
-    });
+  }
+
+  ionViewWillEnter() {
+    this.getQuestions();
   }
 
   getQuestions() {

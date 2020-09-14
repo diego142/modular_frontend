@@ -22,12 +22,11 @@ export class EventsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.getEvents();
-        this.userId = this.getUserIdStorage();
-      }
-    });
+  }
+
+  ionViewWillEnter() {
+    this.getEvents();
+    this.userId = this.getUserIdStorage();
   }
 
   async toast(msg: string) {

@@ -30,8 +30,8 @@ export class UserService {
     return this.http.post<Response<User>>(this.URL_API, user);
   }
 
-  putUser(user: User) {
-    return this.http.put(this.URL_API, user);
+  updateUser(user: User) {
+    return this.http.put<Response<User>>(this.URL_API, user);
   }
 
   deleteUser(id: string) {

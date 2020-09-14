@@ -24,6 +24,9 @@ export class TagFormPage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.questionId = this.activatedRoute.snapshot.params.id;
     this.getBranches();
     this.formValid = false;

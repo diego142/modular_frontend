@@ -20,13 +20,12 @@ export class HelpPage implements OnInit {
   constructor(private branchService: BranchService, private tagService: TagService, private router: Router) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.selectText = 'Elige una opcion';
-        this.getBranches();
-        this.getTags();
-      }
-    });
+  }
+
+  ionViewWillEnter() {
+    this.selectText = 'Elige una opcion';
+    this.getBranches();
+    this.getTags();
   }
 
   getBranches() {

@@ -20,6 +20,9 @@ export class EventFormPage implements OnInit {
     private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.id = this.activatedRoute.snapshot.params.id;
     this.getEvent(this.id);
   }
