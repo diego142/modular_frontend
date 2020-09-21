@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Eventos
-    </ion-title>
+    <ion-title>Eventos</ion-title>
+    <!-- <ion-icon name="calendar"></ion-icon>  -->
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
@@ -12,6 +12,18 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-item class="leyenda">
+    <p (click)="mostrarOcultar()"> <ion-text color="primary"> ¿Qué es esto?</ion-text></p>
+  </ion-item>
+  <div id="mostrarOcultar" style="display: none;">
+      <ion-card>
+        <ion-card-content>
+          La sección de eventos te permite ver los eventos próximos en la comunidad de Cucei así como
+          poder crear un evento propio para invitar a quien lo vea a participar en el.
+        </ion-card-content>
+      </ion-card>
+  </div>
 
   <ion-list>
 
@@ -27,8 +39,8 @@
           <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
         </ion-avatar>
         <ion-label>
-          <h3>{{event.user.name + ' ' + event.user.lastName}}</h3>
-          <p>{{event.date | date: 'MMM d, y'}}</p>
+          <h3 class="user" >{{event.user.name + ' ' + event.user.lastName}}</h3>
+          <p class="date" >{{event.date | date: 'MMM d, y'}}</p>
         </ion-label>
       </ion-item>
 
@@ -42,13 +54,13 @@
       <ion-footer *ngIf="event.user._id == userId">
         <ion-row>
           <ion-col class="ion-text-center">
-            <ion-button color="secondary" (click)="editEvent(event._id)"> EDITAR 
-              <ion-icon name="create"></ion-icon>
+            <ion-button class="btnEdit" color="myPrimary" (click)="editEvent(event._id)"> EDITAR 
+              <ion-icon name="create" class="iconEdit"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col class="ion-text-center">
-            <ion-button color="danger" (click)="confirmClose(event._id)"> CERRAR 
-              <ion-icon name="close-circle"></ion-icon>
+            <ion-button class="btnCerrar" color="danger" (click)="confirmClose(event._id)"> CERRAR 
+              <ion-icon name="close-circle" class="iconClose" ></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>

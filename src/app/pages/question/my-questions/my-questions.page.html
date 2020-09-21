@@ -2,6 +2,7 @@
   <ion-toolbar>
     <ion-title>Mis preguntas
     </ion-title>
+    <!-- <ion-icon name="help-circle-outline"></ion-icon> -->
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
@@ -14,7 +15,7 @@
 <ion-content>
 
   <ion-item lines="full">
-    <ion-button color="success" expand="block" slot="end" (click)="newQuestion()">
+    <ion-button class="btnQuestion" expand="block" slot="end" (click)="newQuestion()">
       Pregunta
       <ion-icon style="margin-left: 8px; margin-bottom: 2px;" name="add-circle"></ion-icon>
     </ion-button>
@@ -38,18 +39,18 @@
       <ion-footer>
         <ion-row>
           <ion-col class="ion-text-center">
-            <ion-button color="tertiary" (click)="viewQuestion(question._id)"> VER
-              <ion-icon name="eye"></ion-icon>
+            <ion-button color="primary" (click)="viewQuestion(question._id)"> VER
+              <ion-icon name="eye" style="padding-left: 4px;"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col *ngIf="question.open" class="ion-text-center">
-            <ion-button color="secondary" (click)="updateQuestion(question._id)"> EDITAR
-              <ion-icon name="create"></ion-icon>
+            <ion-button color="myPrimary" (click)="updateQuestion(question._id)"> EDITAR
+              <ion-icon name="create" style="padding-left: 4px;"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col *ngIf="question.open" class="ion-text-center">
-            <ion-button color="success" (click)="confirmClose(question._id)"> CERRAR
-              <ion-icon name="checkmark-circle"></ion-icon>
+            <ion-button color="danger" (click)="confirmClose(question._id)"> CERRAR
+              <ion-icon name="close-circle" style="padding-left: 2px;" ></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>

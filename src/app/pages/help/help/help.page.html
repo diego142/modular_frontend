@@ -13,7 +13,7 @@
 
 <ion-content>
   <ion-item lines="full">
-    <ion-text color="medium">
+    <ion-text color="mySecondary">
       <div class="ion-text-center" style="margin-top: 10px;">
         Apoya a la comunidad de alumnos contestando las preguntas de los demas,
         asi nos apoyamos entre todos. Usa el filtro para buscar preguntas que se ajusten
@@ -48,9 +48,9 @@
         <ion-text slot="end" color="medium"> {{tag.question.date |date: 'd/M/yyyy'}} </ion-text>
         <ion-label>
           <ion-text color="primary">
-            <h2> <strong>{{tag.question.user.name + ' ' + tag.question.user.lastName}} </strong></h2>
+            <h2 class="user"> {{tag.question.user.name + ' ' + tag.question.user.lastName}} </h2>
           </ion-text>
-          <h2> {{tag.question.title}} </h2>
+          <h2 class="title"><strong> {{tag.question.title}} </strong></h2>
           <ion-text color="medium">
             <span> {{tag.question.body}} </span>
           </ion-text>

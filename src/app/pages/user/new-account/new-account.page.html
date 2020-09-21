@@ -1,12 +1,14 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>Registrar</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <img class="logotipo" src="assets/icon/logotipo.png">
+  <div class="logotipo">
+    <img src="assets/icon/logoV2.png">
+  </div>
 
   <form #formLogin="ngForm">
     <ion-item>
@@ -35,7 +37,7 @@
     </ion-item>
   </form>
 
-  <ion-button expand="full" color="success" (click)="addUser()" [disabled]="!(formLogin.valid && (bandera==true))" >Registrar</ion-button>
+  <ion-button expand="full" color="myPrimary" (click)="verifyNewUser()" [disabled]="!(formLogin.valid && (bandera==true))" >Registrar</ion-button>
 
   <div class="iniciar">
     <p>¿Ya tienes una cuenta?</p>
