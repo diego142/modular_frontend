@@ -86,4 +86,12 @@ export class EventsPage implements OnInit {
     return localStorage.getItem('user_id');
   }
 
+  mostrarOcultar() {
+    if(document.getElementById('mostrarOcultar').style.display === 'none'){
+      document.getElementById('mostrarOcultar').style.display = 'block';
+    }
+    else if(document.getElementById('mostrarOcultar').style.display === 'block'){
+      document.getElementById('mostrarOcultar').style.display = 'none';
+    }
+  }
 }

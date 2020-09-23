@@ -64,6 +64,22 @@ export class NewAccountPage implements OnInit {
     }
   }
 
+  verifyNewUser() {
+    this.userService.getUser(this.user.email).subscribe((res) => {
+      if (res.data !== null) {
+        this.toast('Error', 'La dirección de correo electrónico que ingreso ya esta registrada. Intente de nuevo', 4000);
+        this.user.email = ' ';
+      }
+      else {
+        this.addUser();
+      }
+    },
+      (err) => {
+        this.failedAccount('ERROR DE SERVIDOR', err.message, 'OK', 'new-account');
+      }
+    );
+  }
+
   addUser() {
     this.user.active = true;
     this.user.age = 0;
@@ -74,7 +90,7 @@ export class NewAccountPage implements OnInit {
       if (res.status) {
         this.router.navigate(['/skill-form/' + res.data._id]);
       } else {
-        this.failedAccount('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear este usuario', 'OK', 'login');        
+        this.failedAccount('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear este usuario', 'OK', 'login');
       }
     }, (err) => {
       this.failedAccount('ERROR DE SERVIDOR', err.message, 'OK', 'new-account');

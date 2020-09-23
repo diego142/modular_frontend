@@ -57,13 +57,13 @@
   </div>
 
   <section>
-    <ion-button *ngIf="this.questionId == '0'; else elseBtn" expand="full" color="success" 
+    <ion-button *ngIf="this.questionId == '0'; else elseBtn" expand="full" color="myPrimary" 
     (click)="createQuestion()" [disabled]="!formQuestion.valid">
       PREGUNTAR
     </ion-button>
 
     <ng-template #elseBtn>
-      <ion-button expand="full" color="primary" (click)="updateQuestion()" [disabled]="!formQuestion.valid">
+      <ion-button expand="full" color="myPrimary" (click)="updateQuestion()" [disabled]="!formQuestion.valid">
         ACTUALIZAR
       </ion-button>
     </ng-template>

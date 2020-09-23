@@ -82,12 +82,12 @@
       </ion-item>
     </ion-card>
 
-    <ion-button expand="full" color="primary" (click)="updateUser()" [disabled]="!userForm.valid">Actualizar
+    <ion-button expand="full" color="myPrimary" style="font-family: Arial, Helvetica, sans-serif;" (click)="updateUser()" [disabled]="!userForm.valid">Actualizar
     </ion-button>
   </form>
 
   <ion-item>
-    <ion-button slot="end" color="secondary" (click)="editSkills()">Editar <ion-icon name="create"></ion-icon></ion-button>
+    <ion-button slot="end" class="btnEditar" (click)="editSkills()">Editar <ion-icon name="create" class="icon"></ion-icon></ion-button>
     <ion-label>
       <ion-text color="dark"> Tus habilidades: </ion-text>
     </ion-label>

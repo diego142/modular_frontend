@@ -10,7 +10,7 @@
 <ion-content>
 
   <ion-item lines="full">
-    <ion-text color="medium">
+    <ion-text>
       <div class="ion-text-center">
         Por favor marca la(s) habilidad(es) que posees. Con esto podras apoyar a la comunidad de alumnos.
       </div>
@@ -28,7 +28,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button expand="full" color="primary" (click)="updateSkill()" [disabled]="!formValid">Actualizar
+        <ion-button expand="full" class="btnActualizar" color="myPrimary" (click)="updateSkill()" [disabled]="!formValid">Actualizar
         </ion-button>
       </ion-col>
     </ion-row>

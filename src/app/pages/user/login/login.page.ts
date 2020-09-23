@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
     const toast = await this.toastController.create({
       header: head,
       message: msg,
-      color: 'primary',
+      color: 'myPrimary',
       duration: time
     });
     toast.present();
