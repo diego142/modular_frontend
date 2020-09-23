@@ -21,10 +21,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/user/new-account/new-account.module').then( m => m.NewAccountPageModule)
   },
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: 'events',
     loadChildren: () => import('./pages/event/events/events.module').then( m => m.EventsPageModule), canActivate: [AuthGuard]
   },

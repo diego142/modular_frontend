@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
         if (res.data.password === this.user.password) {
           this.toast('Bienvenido al foro', '', 1000);
           this.setStorageUser(res.data._id);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/events']);
         } else {
           this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email', 2000);
           this.router.navigate(['/login']);
