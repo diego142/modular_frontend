@@ -20,17 +20,17 @@
       </div>
     </ion-text>
 
-    <ion-item class="select" *ngFor="let question of questionService.questionList" (click)="viewQuestion(question._id)">
+    <ion-item *ngFor="let question of questionService.questionList" (click)="viewQuestion(question._id)">
       <ion-avatar slot="start">
         <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
       </ion-avatar>
-      <ion-text slot="end" color="medium"> {{question.date | date: 'd/M/yyyy'}} </ion-text>
+      <ion-text slot="end" color="myPrimaryDark"> {{question.date | date: 'd/M/yyyy'}} </ion-text>
       <ion-label>
-        <ion-text>
-          <h2 class="user">  {{ question.user.name + ' ' + question.user.lastName }} </h2>
+        <ion-text color="myPrimaryDark">
+          <h2>  {{ question.user.name + ' ' + question.user.lastName }} </h2>
         </ion-text>
-        <h2 class="title"><strong> {{ question.title }} </strong></h2>
-        <ion-text color="medium">
+        <h2><strong> {{ question.title }} </strong></h2>
+        <ion-text color="myPrimaryTextColor">
           <span> {{ question.body }} </span>
         </ion-text>
       </ion-label>

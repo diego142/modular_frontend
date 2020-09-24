@@ -38,6 +38,8 @@ export class HelpPage implements OnInit {
 
   getTags() {
     this.tagService.getTags().subscribe((res) => {
+      console.log(res);
+      
       this.tagsList = res.data.filter(tag => tag.question.open === true);
       this.tagsFilterList = this.tagsList;
 

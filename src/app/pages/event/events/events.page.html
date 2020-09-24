@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Eventos</ion-title>
-    <!-- <ion-icon name="calendar"></ion-icon>  -->
+    
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
@@ -34,13 +34,21 @@
     </ion-text>
 
     <ion-card *ngFor="let event of eventService.eventList">
-      <ion-item>
+      <ion-item color="headerColor">
         <ion-avatar slot="start">
           <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
         </ion-avatar>
         <ion-label>
-          <h3 class="user" >{{event.user.name + ' ' + event.user.lastName}}</h3>
-          <p class="date" >{{event.date | date: 'MMM d, y'}}</p>
+          <h3 class="user">
+            <ion-text color="myPrimaryText">
+              {{event.user.name + ' ' + event.user.lastName}}
+            </ion-text>
+          </h3>
+          <p class="date">
+            <ion-text color="myPrimaryText">
+              {{event.date | date: 'MMM d, y'}}
+            </ion-text>
+          </p>
         </ion-label>
       </ion-item>
 

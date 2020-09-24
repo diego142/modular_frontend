@@ -30,16 +30,20 @@
 
   <ion-list>
 
-    <ion-card *ngFor="let question of myQuestions">
-      <ion-card-header>
-        <ion-card-title>{{ question.title }}</ion-card-title>
+    <ion-card color="myPrimaryLight" *ngFor="let question of myQuestions">
+      <ion-card-header color="myPrimary" style="margin-bottom: 15px;">
+        <ion-card-title>
+          <ion-text color="myPrimaryText">
+            {{ question.title }}
+          </ion-text>
+        </ion-card-title>
       </ion-card-header>
-      <ion-card-content> {{ question.body }} </ion-card-content>
+      <ion-card-content style="font-size: 18px;"> {{ question.body }} </ion-card-content>
 
       <ion-footer>
         <ion-row>
           <ion-col class="ion-text-center">
-            <ion-button color="primary" (click)="viewQuestion(question._id)"> VER
+            <ion-button color="tertiary" (click)="viewQuestion(question._id)"> VER
               <ion-icon name="eye" style="padding-left: 4px;"></ion-icon>
             </ion-button>
           </ion-col>
