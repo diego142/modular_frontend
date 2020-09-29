@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="headerColor">
     <ion-title>Actualizar habilidades</ion-title>
     <ion-buttons slot="end">
       <ion-back-button defaultHref="events"></ion-back-button>
@@ -10,8 +10,8 @@
 <ion-content>
 
   <ion-item lines="full">
-    <ion-text>
-      <div class="ion-text-center">
+    <ion-text color="myPrimaryTextColor" style="font-size: large;">
+      <div class="ion-text-center" style="padding-top: 5px;">
         Por favor marca la(s) habilidad(es) que posees. Con esto podras apoyar a la comunidad de alumnos.
       </div>
     </ion-text>
@@ -28,7 +28,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button expand="full" class="btnActualizar" color="myPrimary" (click)="updateSkill()" [disabled]="!formValid">Actualizar
+        <ion-button expand="full" class="btnActualizar" color="headerColor" (click)="updateSkill()" [disabled]="!formValid">Actualizar
         </ion-button>
       </ion-col>
     </ion-row>

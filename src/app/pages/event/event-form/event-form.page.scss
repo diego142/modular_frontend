@@ -13,8 +13,11 @@ ion-toolbar {
 }
 
 ion-text {
-    color: #607D8B;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.mensaje {
+    --background: #607D8B;
 }
 
 ion-item {
@@ -24,6 +27,6 @@ ion-item {
 }
 
 ion-button {
-    --background: #009688;
     font-family: Arial, Helvetica, sans-serif;
 }
+

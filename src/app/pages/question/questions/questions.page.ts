@@ -31,4 +31,13 @@ export class QuestionsPage implements OnInit {
     this.router.navigate(['/question-view/' + id]);
   }
 
+  showHide() {
+    if(document.getElementById('showHide').style.display === 'none'){
+      document.getElementById('showHide').style.display = 'block';
+    }
+    else if(document.getElementById('showHide').style.display === 'block'){
+      document.getElementById('showHide').style.display = 'none';
+    }
+  }
+
 }

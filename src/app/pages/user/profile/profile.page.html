@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="headerColor">
     <ion-title>Mi perfil
     </ion-title>
     <ion-buttons slot="start">
@@ -82,7 +82,7 @@
       </ion-item>
     </ion-card>
 
-    <ion-button expand="full" color="myPrimary" style="font-family: Arial, Helvetica, sans-serif;" (click)="updateUser()" [disabled]="!userForm.valid">Actualizar
+    <ion-button expand="full" color="headerColor" style="font-family: Arial, Helvetica, sans-serif;" (click)="updateUser()" [disabled]="!userForm.valid">Actualizar
     </ion-button>
   </form>
 

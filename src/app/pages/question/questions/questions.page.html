@@ -12,6 +12,20 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-item class="leyenda">
+    <p (click)="showHide()"> <ion-text color="primary"> ¿Qué es esto?</ion-text></p>
+  </ion-item>
+  <div id="showHide" style="display: none;">
+      <ion-card>
+        <ion-card-content>
+          En esta sección podrás ver todas las preguntas que se han realizado
+          en todo el foro. Las preguntas aquí abarcan los temas en general, si necesitas
+          buscar una pregunta con un tema en específico la sección de Ayudar es la indicada.
+        </ion-card-content>
+      </ion-card>
+  </div>
+
   <ion-list>
 
     <ion-text *ngIf="questionService.questionList.length < 1" color="medium">

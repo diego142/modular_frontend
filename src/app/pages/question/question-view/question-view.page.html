@@ -13,19 +13,23 @@
 
 <ion-content>
 
-  <ion-card>
-    <ion-item>
+  <ion-card color="myPrimaryLight">
+    <ion-item color="myPrimaryDark">
       <ion-avatar slot="start">
         <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
       </ion-avatar>
       <ion-label>
-        <h3 class="user">{{question.user.name + ' ' + question.user.lastName}}</h3>
-        <p class="date">{{question.date | date: 'MMM d, y'}}</p>
+        <ion-text color="myPrimaryTextColor">
+          <h2> <strong>{{question.user.name + ' ' + question.user.lastName}}</strong></h2>
+        </ion-text>
+        <ion-text color="myPrimaryTextColor">
+          <p class="date">{{question.date | date: 'MMM d, y'}}</p>
+        </ion-text>
       </ion-label>
     </ion-item>
 
     <ion-card-header>
-      <ion-card-title> <strong> {{ question.title }} </strong></ion-card-title>
+      <ion-card-title color="myPrimaryTextColor"> <strong> {{ question.title }} </strong></ion-card-title>
     </ion-card-header>
     <ion-card-content>
       {{question.body}}
@@ -33,20 +37,22 @@
   </ion-card>
 
   <ion-list>
-    <ion-item lines="full">
-      <ion-text color="medium">{{(question.replys.length < 1) ? 'Nadie a respondido a esta pregunta todavia.' : 'Respuestas:'}}</ion-text>
+    <ion-item lines="full" color="myPrimaryDark">
+      <ion-text color="myPrimaryText">{{(question.replys.length < 1) ? 'Nadie a respondido a esta pregunta todavia.' : 'Respuestas:'}}</ion-text>
     </ion-item>
-    <ion-item *ngFor="let reply of question.replys">
+    <ion-item *ngFor="let reply of question.replys" color="myPrimaryLight">
       <ion-avatar slot="start">
         <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
       </ion-avatar>
       <ion-button *ngIf="reply.user._id == userId" slot="end" color="danger" (click)="confirmRemoveReply(reply._id)"><ion-icon name="trash" ></ion-icon></ion-button>
       <ion-label class="ion-text-wrap">
-        <ion-text color="primary">
-          <h3> <strong> {{reply.user.name + ' ' + reply.user.lastName}} </strong> </h3>
+        <ion-text color="myPrimaryTextColor">
+          <h2> <strong> {{reply.user.name + ' ' + reply.user.lastName}} </strong> </h2>
         </ion-text>
-        <p>{{reply.date | date: 'MMM d, y - H:mm'}}</p>
-        <ion-text color="dark">
+        <ion-text>
+          <p class="date">{{reply.date | date: 'MMM d, y - H:mm'}}</p>
+        </ion-text>
+        <ion-text color="myPrimaryTextColor" style="font-size: medium;">
           <span>{{ reply.reply }}</span>
         </ion-text>
       </ion-label>
