@@ -12,15 +12,25 @@
 </ion-header>
 
 <ion-content>
-  <ion-item lines="full">
-    <ion-text color="mySecondary">
-      <div class="ion-text-center" style="margin-top: 10px;">
+  <ion-item color="light">
+    <ion-text color="medium" (click)="showMessage()">
+      ¿Qué es esto?
+    </ion-text>
+    <ion-item slot="end" color="light" style="margin: 0px;">
+      <ion-label color="primary" style="margin-right: 10px;">Buscar: </ion-label>
+      <ion-input class="findInput" (keyup)="findQuestion($event.target.value)"></ion-input>
+    </ion-item>
+  </ion-item>
+
+  <div *ngIf="showMsg">
+    <ion-card>
+      <ion-card-content>
         Apoya a la comunidad de alumnos contestando las preguntas de los demas,
         asi nos apoyamos entre todos. Usa el filtro para buscar preguntas que se ajusten
-        a tus conocimientos
-      </div>
-    </ion-text>
-  </ion-item>
+        a tus conocimientos, o bien usa el buscador.
+      </ion-card-content>
+    </ion-card>
+  </div>
 
   <ion-item lines="full">
     <ion-label>
@@ -41,11 +51,11 @@
 
   <ng-template #elseList>
     <ion-list>
-      <ion-item class="select" *ngFor="let tag of tagsFilterList" (click)="viewQuestion(tag.question._id)">
+      <ion-item *ngFor="let tag of tagsFilterList" (click)="viewQuestion(tag.question._id)">
         <ion-avatar slot="start">
-          <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+          <img src="assets/icon/avatar.png">
         </ion-avatar>
-        <ion-text slot="end" color="medium"> {{tag.question.date |date: 'd/M/yyyy'}} </ion-text>
+        <ion-text slot="end" color="myPrimary"> {{tag.question.date |date: 'd/M/yyyy'}} </ion-text>
         <ion-label>
           <ion-text color="primary">
             <h2 class="user"> {{tag.question.user.name + ' ' + tag.question.user.lastName}} </h2>

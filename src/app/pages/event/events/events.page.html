@@ -14,7 +14,7 @@
 <ion-content>
 
   <ion-item class="leyenda">
-    <p (click)="mostrarOcultar()"> <ion-text color="primary"> ¿Qué es esto?</ion-text></p>
+    <p (click)="mostrarOcultar()"> <ion-text color="medium"> ¿Qué es esto?</ion-text></p>
   </ion-item>
   <div id="mostrarOcultar" style="display: none;">
       <ion-card>
@@ -36,7 +36,7 @@
     <ion-card *ngFor="let event of eventService.eventList">
       <ion-item color="headerColor">
         <ion-avatar slot="start">
-          <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+          <img src="assets/icon/avatar.png">
         </ion-avatar>
         <ion-label>
           <h3 class="user">
@@ -62,8 +62,11 @@
       <ion-footer *ngIf="event.user._id == userId">
         <ion-row>
           <ion-col class="ion-text-center">
-            <ion-button class="btnEdit" color="myPrimary" (click)="editEvent(event._id)"> EDITAR 
-              <ion-icon name="create" class="iconEdit"></ion-icon>
+            <ion-button color="myPrimary" (click)="editEvent(event._id)"> 
+              <ion-label>
+                EDITAR
+              </ion-label> 
+              <ion-icon slot="end" class="iconEdit" name="create"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col class="ion-text-center">

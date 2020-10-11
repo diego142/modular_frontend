@@ -79,7 +79,7 @@ export class ProfilePage implements OnInit {
 
   enableInput(input: HTMLInputElement) {
     input.readOnly = false;
-    input.style.color = 'rgb(43, 43, 43)';
+    input.style.color = 'rgb(20, 54, 119)';
   }
 
   getUserIdStorage() {

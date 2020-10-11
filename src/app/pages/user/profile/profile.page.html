@@ -18,7 +18,7 @@
       <ion-col>
         <div class="center-content">
           <ion-avatar class="big-size">
-            <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+            <img src="assets/icon/avatar.png">
           </ion-avatar>
         </div>
       </ion-col>
@@ -82,12 +82,12 @@
       </ion-item>
     </ion-card>
 
-    <ion-button expand="full" color="headerColor" style="font-family: Arial, Helvetica, sans-serif;" (click)="updateUser()" [disabled]="!userForm.valid">Actualizar
+    <ion-button expand="full" color="myPrimaryDark" style="font-family: Arial, Helvetica, sans-serif;" (click)="updateUser()" [disabled]="!userForm.valid">Actualizar
     </ion-button>
   </form>
 
   <ion-item>
-    <ion-button slot="end" class="btnEditar" (click)="editSkills()">Editar <ion-icon name="create" class="icon"></ion-icon></ion-button>
+    <ion-button slot="end" color="success" (click)="editSkills()">Editar <ion-icon name="create" class="icon"></ion-icon></ion-button>
     <ion-label>
       <ion-text color="dark"> Tus habilidades: </ion-text>
     </ion-label>
@@ -101,7 +101,5 @@
       </ion-label>
     </ion-item>
   </ion-list>
-
-
 
 </ion-content>

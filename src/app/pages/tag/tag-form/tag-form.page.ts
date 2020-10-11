@@ -18,6 +18,7 @@ export class TagFormPage implements OnInit {
   checkList: Check[] = new Array<Check>();
   questionId: string;
   formValid: boolean;
+  labels = [];
 
   constructor(private branchService: BranchService, private tagService: TagService,
     private activatedRoute: ActivatedRoute, private alertController: AlertController,
@@ -28,6 +29,7 @@ export class TagFormPage implements OnInit {
 
   ionViewWillEnter() {
     this.questionId = this.activatedRoute.snapshot.params.id;
+    this.labels = this.activatedRoute.snapshot.queryParams.labels;
     this.getBranches();
     this.formValid = false;
   }
@@ -69,6 +71,17 @@ export class TagFormPage implements OnInit {
 
       this.checkList.push(check);
     }
+    this.fillCheckList();
+  }
+
+  fillCheckList() {
+    let ind: number;
+    for (let lbl of this.labels) {
+      ind = this.checkList.findIndex(check => check.id === lbl);
+      this.checkList[ind].isCheck = true;
+    }
+
+    this.validateForm();
   }
 
   createTag() {

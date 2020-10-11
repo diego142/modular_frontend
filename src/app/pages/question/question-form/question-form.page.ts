@@ -3,6 +3,8 @@ import { Question } from 'src/app/models/question';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { QuestionService } from 'src/app/services/question.service';
 import { AlertController, ToastController } from '@ionic/angular';
+import { NlService } from 'src/app/services/nl.service';
+import { Label } from 'src/app/models/label';
 
 @Component({
   selector: 'app-question-form',
@@ -17,11 +19,16 @@ export class QuestionFormPage implements OnInit {
 
   today = new Date().toISOString();
   show: boolean;
+  labels: Label[];
+  characters: string[];
+  questionList: Question[];
 
   constructor(private activatedRoute: ActivatedRoute, private questionService: QuestionService,
-              private router: Router, private alertController: AlertController) { }
+    private router: Router, private alertController: AlertController,
+    private nlService: NlService) { }
 
   ngOnInit() {
+    this.characters = [' ', '.', '?'];
   }
 
   ionViewWillEnter() {
@@ -29,6 +36,9 @@ export class QuestionFormPage implements OnInit {
     this.userId = this.getUserIdStorage();
     this.getQuestion(this.questionId);
     this.show = false;
+    this.questionList = Array<Question>();
+    this.labels = new Array<Label>();
+
   }
 
   async navigateAlert(head: string, subHead: string, btnTex: string, navigate: string) {
@@ -53,7 +63,7 @@ export class QuestionFormPage implements OnInit {
 
     this.questionService.createQuestion(this.question).subscribe((res) => {
       if (res.status) {
-        this.router.navigate(['/tag-form/' + res.data._id]);
+        this.router.navigate(['/tag-form/' + res.data._id], { queryParams: { labels: this.labels.map(l => l.ref) } });
       } else {
         this.navigateAlert('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear esta pregunta', 'OK', 'my-questions');
       }
@@ -93,5 +103,65 @@ export class QuestionFormPage implements OnInit {
   getUserIdStorage() {
     return localStorage.getItem('user_id');
   }
+
+  getClassifications(key: string) {
+    const size = this.question.title.length;
+    if (size < 10) {
+      this.labels = [];
+      this.show = false;
+      this.questionList = new Array<Question>();
+    } else {
+      if (this.characters.find(c => key === c)) {
+        this.nlService.getClassify(this.question).subscribe((res) => {
+          if (res.data.length) {
+            this.labels = res.data;
+            this.show = true;
+          }
+        }, (err) => {
+          console.log(err);
+        });
+      }
+    }
+  }
+
+  getQuestions(ref: string) {
+
+    this.nlService.getQuestions(ref).subscribe((res) => {
+      if (res.status) {
+        this.questionList = new Array<Question>();
+
+        for (let tag of res.data) {
+          this.questionList.push(tag.question);
+        }
+      }
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  async viewQuestion(id: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¿Salir de la edición?',
+      message: 'Si continuas se perdera el progreso de tu pregunta.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        }, {
+          text: 'Continuar',
+          cssClass: 'success',
+          handler: () => {
+            this.router.navigate(['/question-view/' + id]);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
 
 }

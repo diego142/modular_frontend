@@ -22,7 +22,8 @@
 
       <ion-item>
         <ion-label position="floating" color="medium">Tu pregunta:</ion-label>
-        <ion-input type="text" name="title" [(ngModel)]="question.title" minlength="8" required></ion-input>
+        <ion-input type="text" name="title" [(ngModel)]="question.title" minlength="10" required
+          (keyup)="getClassifications($event.key)"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -33,32 +34,9 @@
     </ion-list>
   </form>
 
-  <div *ngIf="show">
-    <ion-item lines="full">
-      <ion-text color="secondary">Tu pregunta es de tipo:</ion-text>
-    </ion-item>
-
-    <ion-item lines="full">
-      <ion-text color="secondary">Algunas preguntas que podrian interesarte:</ion-text>
-    </ion-item>
-
-    <ion-list>
-      <ion-item>
-        <ion-label>
-          <h2> <strong> titulo </strong></h2>
-          <ion-text color="medium">
-            <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate quo doloremque, quod optio cumque
-              consequuntur et eum ducimus, sapiente doloribus molestias illo sed inventore sunt laudantium velit odio
-              odit assumenda!</span>
-          </ion-text>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-
   <section>
-    <ion-button *ngIf="this.questionId == '0'; else elseBtn" expand="full" color="myPrimary" 
-    (click)="createQuestion()" [disabled]="!formQuestion.valid">
+    <ion-button *ngIf="this.questionId == '0'; else elseBtn" expand="full" color="myPrimary" (click)="createQuestion()"
+      [disabled]="!formQuestion.valid">
       PREGUNTAR
     </ion-button>
 
@@ -67,9 +45,32 @@
         ACTUALIZAR
       </ion-button>
     </ng-template>
-
-
   </section>
+
+  <div *ngIf="show">
+    <ion-list>
+      <ion-text class="ion-margin-start">Tu pregunta es de tipo:</ion-text>
+      <ion-item *ngFor="let label of labels">
+        <ion-button expand="full" color="myPrimary" (click)="getQuestions(label.ref)">{{ label.name }}</ion-button>
+        <ion-text color="medium" slot="end">Mostrar sugerencias.</ion-text>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+
+      <ion-item *ngFor="let qtn of questionList" (click)="viewQuestion(qtn._id)">
+        <ion-text slot="end" color="myPrimaryDark"> {{qtn.date | date: 'd/M/yyyy'}} </ion-text>
+        <ion-label>
+          <h2><strong> {{ qtn.title }} </strong></h2>
+          <ion-text color="myPrimaryTextColor">
+            <span> {{ qtn.body }} </span>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+  </div>
 
 
 </ion-content>

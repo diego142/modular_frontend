@@ -48,11 +48,11 @@
 
   <section>
     <ion-button *ngIf="id == '0'; else elseOpt" expand="full"  
-    [disabled]="!formEvent.valid" (click)="createEvent()" color="headerColor">
+    [disabled]="!formEvent.valid" (click)="createEvent()" color="myPrimaryDark">
       PUBLICAR 
     </ion-button>
     <ng-template #elseOpt>
-      <ion-button expand="full" (click)="updateEvent()" color="headerColor"> ACTUALIZAR </ion-button>
+      <ion-button expand="full" (click)="updateEvent()" color="myPrimaryDark"> ACTUALIZAR </ion-button>
     </ng-template>
   </section>
 </ion-content>

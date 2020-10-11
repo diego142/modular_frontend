@@ -11,12 +11,6 @@ ion-toolbar {
     --background: #00796B;
     --color: white;
 }
-
-ion-item {
-    --background: #f5f5f5;
-    --color: black;
-}
-
 .user {
     color: #3880ff;
     font-size: 18px;
@@ -26,4 +20,9 @@ ion-item {
 .title {
     color: #607D8B;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.findInput {
+    color: rgb(16, 122, 172);
+    background-color: rgb(251, 251, 251);
 }

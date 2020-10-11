@@ -16,6 +16,7 @@ export class HelpPage implements OnInit {
   branchList: Branch[] = new Array<Branch>();
   tagsList: Tag[] = new Array<Tag>();
   tagsFilterList: Tag[] = new Array<Tag>();
+  showMsg = false;
 
   constructor(private branchService: BranchService, private tagService: TagService, private router: Router) { }
 
@@ -30,7 +31,9 @@ export class HelpPage implements OnInit {
 
   getBranches() {
     this.branchService.getBranches().subscribe((res) => {
-      this.branchList = res.data;
+      if (res.status) {
+        this.branchList = res.data;
+      }
     }, (err) => {
       console.log(err);
     });
@@ -38,10 +41,10 @@ export class HelpPage implements OnInit {
 
   getTags() {
     this.tagService.getTags().subscribe((res) => {
-      console.log(res);
-      
-      this.tagsList = res.data.filter(tag => tag.question.open === true);
-      this.tagsFilterList = this.tagsList;
+      if (res.status) {
+        this.tagsList = res.data.filter(tag => tag.question.open === true);
+        this.tagsFilterList = this.tagsList;
+      }
 
     }, (err) => {
       console.log(err);
@@ -65,6 +68,23 @@ export class HelpPage implements OnInit {
 
   viewQuestion(id: string) {
     this.router.navigate(['/question-view/' + id]);
+  }
+
+  showMessage() {
+    this.showMsg = !this.showMsg;
+  }
+
+  findQuestion(quest: string) {
+    quest = quest.trim();
+    const regExp = new RegExp(quest, 'i');
+    this.tagsFilterList = [];
+
+    for (const tag of this.tagsList) {
+      if (tag.question.title.match(regExp)) {
+        this.tagsFilterList.push(tag);
+      }
+    }
+
   }
 
 }
