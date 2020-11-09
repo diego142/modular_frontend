@@ -24,4 +24,13 @@ export class NlService {
     return this.http.get<Response<Tag[]>>(environment.URL + 'nl/questions/' + ref);
   }
 
+  addNewWords(ws: string, brchs: Array<string>): Observable<Response<string>> {
+    const obj = {
+      branches: brchs,
+      words: ws
+    };
+    
+    return this.http.post<Response<string>>(environment.URL + 'nl/addWords', obj);
+  }
+
 }

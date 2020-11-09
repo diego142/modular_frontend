@@ -28,7 +28,7 @@
 
       <ion-item>
         <ion-label position="floating" color="medium">Agrega mas detalles sobre la pregunta:</ion-label>
-        <ion-textarea name="body" [(ngModel)]="question.body" minlength="8" required></ion-textarea>
+        <ion-textarea name="body" [(ngModel)]="question.body" minlength="8" required (ionFocus)="getClassifications('?')"></ion-textarea>
       </ion-item>
 
     </ion-list>

@@ -6,6 +6,8 @@ import { Tag } from 'src/app/models/tag';
 import { TagService } from 'src/app/services/tag.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { QuestionService } from 'src/app/services/question.service';
+import { NlService } from 'src/app/services/nl.service';
 
 @Component({
   selector: 'app-tag-form',
@@ -18,11 +20,12 @@ export class TagFormPage implements OnInit {
   checkList: Check[] = new Array<Check>();
   questionId: string;
   formValid: boolean;
+  addWords: boolean;
   labels = [];
 
   constructor(private branchService: BranchService, private tagService: TagService,
     private activatedRoute: ActivatedRoute, private alertController: AlertController,
-    private router: Router) { }
+    private router: Router, private questionService: QuestionService, private nlService: NlService) { }
 
   ngOnInit() {
   }
@@ -32,6 +35,7 @@ export class TagFormPage implements OnInit {
     this.labels = this.activatedRoute.snapshot.queryParams.labels;
     this.getBranches();
     this.formValid = false;
+    this.addWords = false;
   }
 
   async navigateAlert(head: string, subHead: string, btnTex: string, navigate: string) {
@@ -75,6 +79,8 @@ export class TagFormPage implements OnInit {
   }
 
   fillCheckList() {
+    this.addWords = (this.labels.length > 0) ? false : true;
+
     let ind: number;
     for (let lbl of this.labels) {
       ind = this.checkList.findIndex(check => check.id === lbl);
@@ -82,6 +88,7 @@ export class TagFormPage implements OnInit {
     }
 
     this.validateForm();
+
   }
 
   createTag() {
@@ -96,6 +103,10 @@ export class TagFormPage implements OnInit {
       }
     }
 
+    if (this.addWords) {
+      this.addNewWords(this.checkList);
+    }
+
     this.tagService.createTag(tag).subscribe((res) => {
       if (res.status) {
         this.navigateAlert('¡PREGUNTA ENVIADA!', 'Creaste una nueva pregunta', 'OK', 'my-questions');
@@ -104,6 +115,28 @@ export class TagFormPage implements OnInit {
       }
     }, (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'my-questions');
+    });
+  }
+
+  addNewWords(tags) {
+    const brchs = new Array<string>();
+
+    for (const check of this.checkList) {
+      if (check.isCheck) {
+        brchs.push(check.name);
+      }
+    }
+
+    this.questionService.getQuestionById(this.questionId).subscribe((res) => {
+      if (res.status) {
+        const words = res.data.title;
+        this.nlService.addNewWords(words, brchs).subscribe((res) => { }, (err) => {
+          console.log(err);
+        });
+      }
+    }, (err) => {
+      console.log(err);
+
     });
   }
 

@@ -32,6 +32,7 @@ export class QuestionFormPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.question = new Question();
     this.questionId = this.activatedRoute.snapshot.params.id;
     this.userId = this.getUserIdStorage();
     this.getQuestion(this.questionId);
@@ -114,6 +115,7 @@ export class QuestionFormPage implements OnInit {
       if (this.characters.find(c => key === c)) {
         this.nlService.getClassify(this.question).subscribe((res) => {
           if (res.data.length) {
+
             this.labels = res.data;
             this.show = true;
           }
