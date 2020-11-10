@@ -84,7 +84,6 @@ export class HelpPage implements OnInit {
         this.tagsFilterList.push(tag);
       }
     }
-
   }
 
 }

@@ -59,7 +59,7 @@
         {{event.body}}
       </ion-card-content>
 
-      <ion-footer *ngIf="event.user._id == userId">
+      <ion-footer *ngIf="(event.user._id == user._id) || (user.permission == 1)">
         <ion-row>
           <ion-col class="ion-text-center">
             <ion-button color="myPrimary" (click)="editEvent(event._id)"> 

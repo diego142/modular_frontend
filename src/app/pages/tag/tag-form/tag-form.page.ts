@@ -32,7 +32,9 @@ export class TagFormPage implements OnInit {
 
   ionViewWillEnter() {
     this.questionId = this.activatedRoute.snapshot.params.id;
-    this.labels = this.activatedRoute.snapshot.queryParams.labels;
+    this.labels = (this.activatedRoute.snapshot.queryParams.labels)
+      ? this.activatedRoute.snapshot.queryParams.labels
+      : [];
     this.getBranches();
     this.formValid = false;
     this.addWords = false;
@@ -86,9 +88,7 @@ export class TagFormPage implements OnInit {
       ind = this.checkList.findIndex(check => check.id === lbl);
       this.checkList[ind].isCheck = true;
     }
-
     this.validateForm();
-
   }
 
   createTag() {
@@ -122,7 +122,8 @@ export class TagFormPage implements OnInit {
     const brchs = new Array<string>();
 
     for (const check of this.checkList) {
-      if (check.isCheck) {
+      const exists = this.labels.findIndex(br => br === check.id);
+      if (check.isCheck && exists === -1) {
         brchs.push(check.name);
       }
     }
@@ -136,18 +137,29 @@ export class TagFormPage implements OnInit {
       }
     }, (err) => {
       console.log(err);
-
     });
   }
 
   validateForm() {
     for (const check of this.checkList) {
+      const exists = this.labels.findIndex(br => br === check.id);
+
+      if (check.isCheck && exists === -1) {
+        this.addWords = true;
+        break;
+      }
+      this.addWords = false;
+    }
+
+    for (const check of this.checkList) {
+
       if (check.isCheck) {
         this.formValid = true;
         return;
       }
     }
     this.formValid = false;
+    this.addWords = false;
   }
 
 

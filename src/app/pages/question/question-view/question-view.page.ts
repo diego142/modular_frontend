@@ -4,6 +4,9 @@ import { Question } from 'src/app/models/question';
 import { QuestionService } from 'src/app/services/question.service';
 import { Reply } from 'src/app/models/reply';
 import { AlertController, ToastController } from '@ionic/angular';
+import { User } from 'src/app/models/user';
+import { Util } from 'src/app/models/util';
+import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-question-view',
@@ -12,7 +15,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class QuestionViewPage implements OnInit {
 
-  userId: string;
+  user = new User();
   questionId: string;
   question = new Question();
   reply = new Reply();
@@ -26,7 +29,7 @@ export class QuestionViewPage implements OnInit {
   ionViewWillEnter() {
     this.questionId = this.activatedRoute.snapshot.params.id;
     this.getQuestion(this.questionId);
-    this.userId = this.getUserIdStorage();
+    this.user = Util.getStorageUser();
   }
 
   async navigateAlert(head: string, subHead: string, btnTex: string, navigate: string) {
@@ -42,8 +45,19 @@ export class QuestionViewPage implements OnInit {
     });
   }
 
-  getQuestion(id: string) {
+  closeQuestion(id: string) {
+    this.questionService.closeQuestion(id).subscribe((res) => {
+      if (res.status) {
+        this.question.open = false;
+      } else {
+        this.navigateAlert('¡ERROR AL CERRAR!', 'Hubo un problema al intentar obtener la informacion de esta pregunta', 'OK', 'questions');
+      }
+    }, (err) => {
+      this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'questions');
+    });
+  }
 
+  getQuestion(id: string) {
     this.questionService.getQuestionById(id).subscribe((res) => {
       if (res.status) {
         this.question = res.data;
@@ -56,8 +70,7 @@ export class QuestionViewPage implements OnInit {
   }
 
   async addReply() {
-
-    this.reply.user._id = this.userId;
+    this.reply.user._id = this.user._id;
     this.reply.date = new Date();
     this.reply.score = 0;
 
@@ -143,7 +156,4 @@ export class QuestionViewPage implements OnInit {
     }
   }
 
-  getUserIdStorage() {
-    return localStorage.getItem('user_id');
-  }
 }

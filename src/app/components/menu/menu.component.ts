@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
+import { Util } from 'src/app/models/util';
 
 @Component({
   selector: 'app-menu',
@@ -8,14 +10,21 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
+  user = new User();
   constructor(private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.user = Util.getStorageUser();
+
+  }
 
   logOut() {
-    localStorage.removeItem('user_id');
+    Util.removeStorageUser();
     this.router.navigate(['/login/']);
+  }
 
+  getInfoUser() {
+    this.user = Util.getStorageUser();
   }
 
 }

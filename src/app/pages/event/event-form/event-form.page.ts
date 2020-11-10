@@ -4,6 +4,7 @@ import { Event } from 'src/app/models/event';
 import { EventService } from 'src/app/services/event.service';
 import { AlertController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
+import { Util } from 'src/app/models/util';
 
 @Component({
   selector: 'app-event-form',
@@ -59,7 +60,7 @@ export class EventFormPage implements OnInit {
   }
 
   createEvent() {
-    this.event.user._id = this.getUserIdStorage();
+    this.event.user._id = Util.getStorageUser()._id;
     this.event.open = true;
     this.event.date = new Date();
 
@@ -87,9 +88,5 @@ export class EventFormPage implements OnInit {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'events');
     });
 
-  }
-
-  getUserIdStorage() {
-    return localStorage.getItem('user_id');
   }
 }

@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable, generate } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { AlertController } from '@ionic/angular';
+import { Util } from '../models/util';
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +16,37 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const id = localStorage.getItem('user_id');
-    const response = this.getUser(id);
+    const user = Util.getStorageUser();
+    const response = this.getUser(user._id);
 
     return response.then(resolve => {
+
+      const path = next.url[0].path;
+
       if (resolve === true) {
-        if (next.url[0].path === 'login') {
-          return this.router.navigate(['/events/']);
-        } else {
-          return true;
+
+        switch (path) {
+          case 'login':
+            return this.router.navigate(['/events/']);
+
+          case 'branches':
+            if (user.permission === 1) {
+              return true;
+            }
+            return this.router.navigate(['/events/']);
+
+          case 'users':
+            if (user.permission === 1) {
+              return true;
+            }
+            return this.router.navigate(['/events/']);
+
+          default:
+            return true;
         }
+
       } else {
-        if (next.url[0].path === 'login') {
+        if (path === 'login') {
           return true;
         } else {
           this.alert();
@@ -41,6 +61,7 @@ export class AuthGuard implements CanActivate {
     return new Promise((resolve, reject) => {
       this.userService.getUserById(id).subscribe((res) => {
         if (res.status && res.data !== null) {
+          Util.setStorageUser(res.data);
           resolve(true);
         } else {
           resolve(false);
@@ -59,7 +80,7 @@ export class AuthGuard implements CanActivate {
     });
 
     await alert.present();
-    localStorage.removeItem('user_id');
+    Util.removeStorageUser();
   }
 
 }

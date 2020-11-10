@@ -5,6 +5,8 @@ import { QuestionService } from 'src/app/services/question.service';
 import { AlertController, ToastController } from '@ionic/angular';
 import { NlService } from 'src/app/services/nl.service';
 import { Label } from 'src/app/models/label';
+import { User } from 'src/app/models/user';
+import { Util } from 'src/app/models/util';
 
 @Component({
   selector: 'app-question-form',
@@ -15,7 +17,7 @@ export class QuestionFormPage implements OnInit {
 
   question: Question = new Question();
   questionId: string;
-  userId: string;
+  user = new User();
 
   today = new Date().toISOString();
   show: boolean;
@@ -34,7 +36,7 @@ export class QuestionFormPage implements OnInit {
   ionViewWillEnter() {
     this.question = new Question();
     this.questionId = this.activatedRoute.snapshot.params.id;
-    this.userId = this.getUserIdStorage();
+    this.user = Util.getStorageUser();
     this.getQuestion(this.questionId);
     this.show = false;
     this.questionList = Array<Question>();
@@ -58,7 +60,7 @@ export class QuestionFormPage implements OnInit {
   }
 
   createQuestion() {
-    this.question.user._id = this.userId;
+    this.question.user._id = this.user._id;
     this.question.date = new Date();
     this.question.open = true;
 
@@ -101,10 +103,6 @@ export class QuestionFormPage implements OnInit {
     }
   }
 
-  getUserIdStorage() {
-    return localStorage.getItem('user_id');
-  }
-
   getClassifications(key: string) {
     const size = this.question.title.length;
     if (size < 10) {
@@ -127,7 +125,6 @@ export class QuestionFormPage implements OnInit {
   }
 
   getQuestions(ref: string) {
-
     this.nlService.getQuestions(ref).subscribe((res) => {
       if (res.status) {
         this.questionList = new Array<Question>();

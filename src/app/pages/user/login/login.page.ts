@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { Util } from 'src/app/models/util';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { MenuComponent } from 'src/app/components/menu/menu.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,8 @@ export class LoginPage implements OnInit {
   user = new User();
 
   constructor(private userService: UserService, private router: Router,
-              public toastController: ToastController, private alertController: AlertController) { }
+              public toastController: ToastController, private alertController: AlertController,
+              ) { }
 
   ngOnInit() {
   }
@@ -55,7 +58,7 @@ export class LoginPage implements OnInit {
       } else {
         if (res.data.password === this.user.password) {
           this.toast('Bienvenido al foro', '', 1000);
-          this.setStorageUser(res.data._id);
+          Util.setStorageUser(res.data);
           this.router.navigate(['/events']);
         } else {
           this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email', 2000);
@@ -70,8 +73,6 @@ export class LoginPage implements OnInit {
     );
   }
 
-  setStorageUser(id: string) {
-    localStorage.setItem('user_id', id);
-  }
+
 
 }

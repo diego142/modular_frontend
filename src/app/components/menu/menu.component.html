@@ -1,7 +1,7 @@
-<ion-menu menuId="main-menu" content-id="main">
+<ion-menu menuId="main-menu" content-id="main" (ionWillOpen)="getInfoUser()">
   <ion-header>
     <ion-toolbar color="myAccent">
-      <ion-title color="myPrimaryText">Menú</ion-title>
+      <ion-title color="myPrimaryText">Menú  {{ (user.permission == 1) ? '(Admin)' : ''}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -39,6 +39,20 @@
         <ion-item routerLink="/questions">
           <ion-icon name="help-circle" slot="start" color="tertiary"></ion-icon>
           <ion-label>Preguntas</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="user.permission == 1">
+        <ion-item routerLink="/users">
+          <ion-icon slot="start" color="primary" name="people"></ion-icon>
+          <ion-label>Usuarios</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="user.permission == 1">
+        <ion-item routerLink="/branches">
+          <ion-icon slot="start" color="warning" name="git-branch"></ion-icon>
+          <ion-label>Ramas</ion-label>
         </ion-item>
       </ion-menu-toggle>
 

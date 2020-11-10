@@ -43,7 +43,6 @@ export class QuestionsPage implements OnInit {
           this.questionFilterList.push(qtn);
         }
       }
-
   }
 
   viewQuestion(id: string) {

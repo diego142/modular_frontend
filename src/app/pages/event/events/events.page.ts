@@ -3,7 +3,8 @@ import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event';
 import { Router, NavigationEnd } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { async } from '@angular/core/testing';
+import { User } from 'src/app/models/user';
+import { Util } from 'src/app/models/util';
 
 @Component({
   selector: 'app-events',
@@ -12,7 +13,7 @@ import { async } from '@angular/core/testing';
 })
 export class EventsPage implements OnInit {
 
-  private userId: string;
+  user = new User();
 
   constructor(private eventService: EventService, private router: Router, private alertController: AlertController,
     private toastController: ToastController) {
@@ -25,8 +26,8 @@ export class EventsPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.user = Util.getStorageUser();
     this.getEvents();
-    this.userId = this.getUserIdStorage();
   }
 
   async toast(msg: string) {
@@ -82,15 +83,11 @@ export class EventsPage implements OnInit {
     });
   }
 
-  getUserIdStorage() {
-    return localStorage.getItem('user_id');
-  }
-
   mostrarOcultar() {
-    if(document.getElementById('mostrarOcultar').style.display === 'none'){
+    if (document.getElementById('mostrarOcultar').style.display === 'none') {
       document.getElementById('mostrarOcultar').style.display = 'block';
     }
-    else if(document.getElementById('mostrarOcultar').style.display === 'block'){
+    else if (document.getElementById('mostrarOcultar').style.display === 'block') {
       document.getElementById('mostrarOcultar').style.display = 'none';
     }
   }

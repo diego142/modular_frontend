@@ -7,5 +7,6 @@ export class User {
     career: string;
     email: string;
     password: string;
+    permission: number;
     active: boolean;
 }

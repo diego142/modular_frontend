@@ -87,6 +87,7 @@ export class SkillFormPage implements OnInit {
     this.skillService.createSkill(skill).subscribe((res) => {
       if (res.status) {
         this.navigateAlert('¡REGISTRO EXITOSO!', 'Puedes editar tus datos en tu perfil', 'OK', 'profile');
+        //Set local storage
       } else {
         this.navigateAlert('¡ERROR AL AGREGAR LOS SKILLS!', 'Hubo un problema al intentar crear este skill', 'OK', 'profile');
       }

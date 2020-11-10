@@ -3,6 +3,8 @@ import { Question } from 'src/app/models/question';
 import { QuestionService } from 'src/app/services/question.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { User } from 'src/app/models/user';
+import { Util } from 'src/app/models/util';
 
 @Component({
   selector: 'app-my-questions',
@@ -11,7 +13,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class MyQuestionsPage implements OnInit {
 
-  userId: string;
+  user = new User();
   myQuestions: Question[] = new Array<Question>();
 
   constructor(private questionService: QuestionService, private router: Router,
@@ -21,7 +23,7 @@ export class MyQuestionsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.userId = this.getUserIdStorage();
+    this.user = Util.getStorageUser();
     this.getQuestions();
   }
 
@@ -34,7 +36,7 @@ export class MyQuestionsPage implements OnInit {
   }
 
   getQuestions() {
-    this.questionService.getQuestionByUserId(this.userId).subscribe((res) => {
+    this.questionService.getQuestionByUserId(this.user._id).subscribe((res) => {
       this.myQuestions = res.data;
 
     }, (err) => {
@@ -88,10 +90,6 @@ export class MyQuestionsPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  getUserIdStorage() {
-    return localStorage.getItem('user_id');
   }
 
 }

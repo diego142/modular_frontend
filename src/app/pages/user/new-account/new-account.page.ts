@@ -83,6 +83,7 @@ export class NewAccountPage implements OnInit {
   addUser() {
     this.user.active = true;
     this.user.age = 0;
+    this.user.permission = 0;
     this.user.code = ' ';
     this.user.career = ' ';
 

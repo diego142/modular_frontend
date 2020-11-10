@@ -16,6 +16,10 @@ export class BranchService {
     return this.http.get<Response<Branch[]>>(environment.URL + 'branch');
   }
 
+  getBranchById(id: string): Observable<Response<Branch>> {
+    return this.http.get<Response<Branch>>(environment.URL + 'branch/' + id);
+  }
+
   createBranch(branch: Branch): Observable<Response<Branch>> {
     return this.http.post<Response<Branch>>(environment.URL + 'branch', branch);
   }

@@ -13,11 +13,17 @@
 
 <ion-content>
 
-  <ion-card >
+  <ion-card>
     <ion-item color="myPrimary">
       <ion-avatar slot="start">
         <img src="assets/icon/avatar.png">
       </ion-avatar>
+      <ion-label *ngIf="(this.question.open) && (this.user.permission == 1)" slot="end">
+        <ion-button color="danger" (click)="closeQuestion(question._id)">
+          <ion-label>CERRAR</ion-label>
+          <ion-icon slot="end" name="close-circle"></ion-icon>
+        </ion-button>
+      </ion-label>
       <ion-label>
         <ion-text color="myPrimaryText">
           <h2> <strong>{{question.user.name + ' ' + question.user.lastName}}</strong></h2>
@@ -38,13 +44,16 @@
 
   <ion-list>
     <ion-item lines="full">
-      <ion-text color="myPrimaryDark">{{(question.replys.length < 1) ? 'Nadie a respondido a esta pregunta todavia.' : 'Respuestas:'}}</ion-text>
+      <ion-text color="myPrimaryDark">
+        {{(question.replys.length < 1) ? 'Nadie a respondido a esta pregunta todavia.' : 'Respuestas:'}}</ion-text>
     </ion-item>
     <ion-item *ngFor="let reply of question.replys">
       <ion-avatar slot="start">
         <img src="assets/icon/avatar.png">
       </ion-avatar>
-      <ion-button *ngIf="reply.user._id == userId" slot="end" color="danger" (click)="confirmRemoveReply(reply._id)"><ion-icon name="trash" ></ion-icon></ion-button>
+      <ion-button *ngIf="reply.user._id == userId" slot="end" color="danger" (click)="confirmRemoveReply(reply._id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
       <ion-label class="ion-text-wrap">
         <ion-text color="myPrimaryTextColor">
           <h2> <strong> {{reply.user.name + ' ' + reply.user.lastName}} </strong> </h2>

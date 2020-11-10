@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { SkillsService } from 'src/app/services/skills.service';
 import { Skill } from 'src/app/models/skill';
 import { Router } from '@angular/router';
+import { Util } from 'src/app/models/util';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,6 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
 
-  userId: string;
   user = new User();
   skill = new Skill();
 
@@ -24,8 +24,7 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.userId = this.getUserIdStorage();
-    this.getUser();
+    this.user = Util.getStorageUser();
     this.getSkill();
   }
 
@@ -37,21 +36,11 @@ export class ProfilePage implements OnInit {
     toast.present();
   }
 
-  getUser() {
-    this.userService.getUserById(this.userId).subscribe((res) => {
-      if (res.status) {
-        this.user = res.data;
-      } else {
-        this.toastMessage('Hubo un problema al obtener la infomacion del usuario');
-      }
-    }, (err) => {
-      this.toastMessage('Problema al conectar con el servidor.');
-    });
-  }
-
   updateUser() {
     this.userService.updateUser(this.user).subscribe((res) => {
       if (res.status) {
+        this.user = res.data;
+        Util.setStorageUser(this.user);
         this.toastMessage('Se actualizo la informacion del usuario');
       } else {
         this.toastMessage('Hubo un problema al actualizar la infomacion del usuario');
@@ -62,7 +51,7 @@ export class ProfilePage implements OnInit {
   }
 
   getSkill() {
-    this.skillService.getSkill(this.userId).subscribe((res) => {
+    this.skillService.getSkill(this.user._id).subscribe((res) => {
       if (res.status) {
         this.skill = res.data;
       } else {
@@ -74,18 +63,13 @@ export class ProfilePage implements OnInit {
   }
 
   editSkills() {
-    this.router.navigate(['/skill-update/' + this.userId]);
+    this.router.navigate(['/skill-update/' + this.user._id]);
   }
 
   enableInput(input: HTMLInputElement) {
     input.readOnly = false;
     input.style.color = 'rgb(20, 54, 119)';
   }
-
-  getUserIdStorage() {
-    return localStorage.getItem('user_id');
-  }
-
 
 
 }
