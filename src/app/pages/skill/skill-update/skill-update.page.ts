@@ -6,6 +6,7 @@ import { SkillsService } from 'src/app/services/skills.service';
 import { AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Skill } from 'src/app/models/skill';
+import { Util } from 'src/app/models/util';
 
 @Component({
   selector: 'app-skill-update',
@@ -61,6 +62,7 @@ export class SkillUpdatePage implements OnInit {
 
     this.skillService.updateSkill(this.userSkill).subscribe((res) => {
       if (res.status) {
+        Util.setStorageSkill(res.data);
         this.router.navigate(['/profile']);
       } else {
         this.navigateAlert('¡ERROR AL OBTENER INFORMACION', 'Hubo un problema al intentar obtener informacion del servidor', 'OK'

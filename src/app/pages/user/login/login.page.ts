@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { MenuComponent } from 'src/app/components/menu/menu.component';
+import { SkillsService } from 'src/app/services/skills.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,8 @@ export class LoginPage implements OnInit {
   user = new User();
 
   constructor(private userService: UserService, private router: Router,
-              public toastController: ToastController, private alertController: AlertController,
-              ) { }
+    public toastController: ToastController, private alertController: AlertController,
+    private skillService: SkillsService) { }
 
   ngOnInit() {
   }
@@ -48,6 +49,16 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
+  getSkill(id: string) {
+    this.skillService.getSkill(id).subscribe((res) => {
+      if (res.status) {
+        Util.setStorageSkill(res.data);
+      }
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
   verifyUser() {
     this.userService.getUser(this.user.email).subscribe((res) => {
       if (res.data == null) {
@@ -58,7 +69,10 @@ export class LoginPage implements OnInit {
       } else {
         if (res.data.password === this.user.password) {
           this.toast('Bienvenido al foro', '', 1000);
+          
           Util.setStorageUser(res.data);
+          this.getSkill(res.data._id);
+
           this.router.navigate(['/events']);
         } else {
           this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email', 2000);

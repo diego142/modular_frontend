@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
 
   logOut() {
     Util.removeStorageUser();
+    Util.removeStorageSkill();
     this.router.navigate(['/login/']);
   }
 

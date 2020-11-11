@@ -40,6 +40,11 @@
     <ion-card-content>
       {{question.body}}
     </ion-card-content>
+
+    <ion-chip color="primary" *ngFor="let br of tag.tags">
+      <ion-label class="ion-text-wrap">{{ br.name | slice:0:3 }}</ion-label><br>
+    </ion-chip> 
+
   </ion-card>
 
   <ion-list>

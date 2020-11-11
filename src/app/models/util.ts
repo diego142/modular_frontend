@@ -1,9 +1,14 @@
+import { Skill } from './skill';
 import { User } from './user';
 
 export class Util {
 
     public static setStorageUser(user: User) {
         localStorage.setItem('user_info', JSON.stringify(user));
+    }
+
+    public static setStorageSkill(skill: Skill) {
+        localStorage.setItem('skills_info', JSON.stringify(skill));
     }
 
     public static getStorageUser(): User {
@@ -15,8 +20,21 @@ export class Util {
         }
     }
 
+    public static getStorageSkills(): Skill {
+        const skill = JSON.parse(localStorage.getItem('skills_info'));
+        if (skill) {
+            return skill;
+        } else {
+            return new Skill();
+        }
+    }
+
     public static removeStorageUser() {
         localStorage.removeItem('user_info');
+    }
+
+    public static removeStorageSkill() {
+        localStorage.removeItem('skills_info');
     }
 
 

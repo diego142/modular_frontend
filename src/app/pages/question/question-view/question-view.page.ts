@@ -7,6 +7,10 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { Util } from 'src/app/models/util';
 import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
+import { Skill } from 'src/app/models/skill';
+import { SkillsService } from 'src/app/services/skills.service';
+import { TagService } from 'src/app/services/tag.service';
+import { Tag } from 'src/app/models/tag';
 
 @Component({
   selector: 'app-question-view',
@@ -18,9 +22,10 @@ export class QuestionViewPage implements OnInit {
   user = new User();
   questionId: string;
   question = new Question();
+  tag = new Tag();
   reply = new Reply();
 
-  constructor(private activatedRoute: ActivatedRoute, private questionService: QuestionService,
+  constructor(private activatedRoute: ActivatedRoute, private questionService: QuestionService, private tagService: TagService,
     private router: Router, private alertController: AlertController, private toastController: ToastController) { }
 
   ngOnInit() {
@@ -29,6 +34,8 @@ export class QuestionViewPage implements OnInit {
   ionViewWillEnter() {
     this.questionId = this.activatedRoute.snapshot.params.id;
     this.getQuestion(this.questionId);
+    this.getTag(this.questionId);
+    
     this.user = Util.getStorageUser();
   }
 
@@ -66,6 +73,18 @@ export class QuestionViewPage implements OnInit {
       }
     }, (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'questions');
+    });
+  }
+
+  getTag(id: string) {
+    this.tagService.getTagByQuestionId(id).subscribe((res) => {
+      if (res.status) {
+        this.tag = res.data;
+        console.log(this.tag.tags);
+
+      }
+    }, (err) => {
+      console.log(err);
     });
   }
 

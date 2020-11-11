@@ -16,8 +16,8 @@ export class TagService {
     return this.http.get<Response<Tag[]>>(environment.URL + 'tag');
   }
 
-  getTagByQuestionId(): Observable<Response<Tag>> {
-    return this.http.get<Response<Tag>>(environment.URL + 'tag');
+  getTagByQuestionId(id: string): Observable<Response<Tag>> {
+    return this.http.get<Response<Tag>>(environment.URL + 'tag/' + id);
   }
 
   createTag(tag: Tag): Observable<Response<Tag>> {
