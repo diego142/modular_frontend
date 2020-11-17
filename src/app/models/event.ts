@@ -5,6 +5,7 @@ export class Event {
     user = new User();
     title: string;
     body: string;
-    date: Date;
+    dateStart: Date;
+    dateEnd: Date;
     open: boolean;
 }

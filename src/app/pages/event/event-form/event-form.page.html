@@ -28,9 +28,21 @@
   <form #formEvent="ngForm">
     <ion-list>
 
-      <ion-item>
+      <ion-item *ngIf="event.dateStart; else elseDate">
         <ion-label>Fecha de inicio:</ion-label>
-        <ion-datetime [value]="today" displayFormat="MMMM DD, YYYY" display-timezone="utc" readonly></ion-datetime>
+        <ion-datetime  [(ngModel)]="event.dateStart" name="dateStart" displayFormat="MMMM DD, YYYY" display-timezone="utc" readonly></ion-datetime>
+      </ion-item>
+
+      <ng-template #elseDate>
+        <ion-item>
+          <ion-label>Fecha de inicio:</ion-label>
+          <ion-datetime  [value]="today" name="dateStart" displayFormat="MMMM DD, YYYY" display-timezone="utc" readonly></ion-datetime>
+        </ion-item>
+      </ng-template>
+
+      <ion-item>
+        <ion-label color="tertiary">Fecha de finalización:</ion-label>
+        <ion-datetime [(ngModel)]="event.dateEnd" name="dateEnd" displayFormat="MMMM DD, YYYY" display-timezone="utc" required></ion-datetime>
       </ion-item>
       
       <ion-item>

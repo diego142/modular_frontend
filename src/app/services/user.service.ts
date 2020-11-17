@@ -23,6 +23,10 @@ export class UserService {
     return this.http.get<Response<User>>(environment.URL + `user/${email}`);
   }
 
+  lostPass(email: string) {
+    return this.http.get<Response<any>>(environment.URL + `user/lostpass/${email}`);
+  }
+
   getUserById(id: string) {
     return this.http.get<Response<User>>(environment.URL + `user/id/${id}`);
   }

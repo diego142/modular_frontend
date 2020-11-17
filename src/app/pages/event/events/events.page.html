@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Eventos</ion-title>
-    
+
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
@@ -14,15 +14,17 @@
 <ion-content>
 
   <ion-item class="leyenda">
-    <p (click)="mostrarOcultar()"> <ion-text color="medium"> ¿Qué es esto?</ion-text></p>
+    <p (click)="mostrarOcultar()">
+      <ion-text color="medium"> ¿Qué es esto?</ion-text>
+    </p>
   </ion-item>
   <div id="mostrarOcultar" style="display: none;">
-      <ion-card>
-        <ion-card-content>
-          La sección de eventos te permite ver los eventos próximos en la comunidad de Cucei así como
-          poder crear un evento propio para invitar a quien lo vea a participar en el.
-        </ion-card-content>
-      </ion-card>
+    <ion-card>
+      <ion-card-content>
+        La sección de eventos te permite ver los eventos próximos en la comunidad de Cucei así como
+        poder crear un evento propio para invitar a quien lo vea a participar en el.
+      </ion-card-content>
+    </ion-card>
   </div>
 
   <ion-list>
@@ -46,9 +48,15 @@
           </h3>
           <p class="date">
             <ion-text color="myPrimaryText">
-              {{event.date | date: 'MMM d, y'}}
+              {{event.dateStart | date: 'MMM d, y': 'UTC'}}
             </ion-text>
           </p>
+        </ion-label>
+        <ion-label color="light"slot=end>
+          <strong> Fin: </strong> 
+          <ion-text>
+            {{event.dateEnd | date: 'MMM d, y': 'UTC'}}
+          </ion-text>
         </ion-label>
       </ion-item>
 
@@ -62,16 +70,16 @@
       <ion-footer *ngIf="(event.user._id == user._id) || (user.permission == 1)">
         <ion-row>
           <ion-col class="ion-text-center">
-            <ion-button color="myPrimary" (click)="editEvent(event._id)"> 
+            <ion-button color="myPrimary" (click)="editEvent(event._id)">
               <ion-label>
                 EDITAR
-              </ion-label> 
+              </ion-label>
               <ion-icon slot="end" class="iconEdit" name="create"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col class="ion-text-center">
-            <ion-button class="btnCerrar" color="danger" (click)="confirmClose(event._id)"> CERRAR 
-              <ion-icon name="close-circle" class="iconClose" ></ion-icon>
+            <ion-button class="btnCerrar" color="danger" (click)="confirmClose(event._id)"> CERRAR
+              <ion-icon name="close-circle" class="iconClose"></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>

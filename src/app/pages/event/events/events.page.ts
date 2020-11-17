@@ -91,4 +91,5 @@ export class EventsPage implements OnInit {
       document.getElementById('mostrarOcultar').style.display = 'none';
     }
   }
+
 }

@@ -24,6 +24,7 @@ export class EventFormPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.event.dateStart = new Date();
     this.id = this.activatedRoute.snapshot.params.id;
     this.getEvent(this.id);
   }
@@ -60,9 +61,11 @@ export class EventFormPage implements OnInit {
   }
 
   createEvent() {
+    this.event.dateStart = new Date();
     this.event.user._id = Util.getStorageUser()._id;
     this.event.open = true;
-    this.event.date = new Date();
+
+    console.log(this.event);
 
     this.eventService.createEvent(this.event).subscribe((res) => {
 
