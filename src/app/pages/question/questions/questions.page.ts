@@ -24,7 +24,7 @@ export class QuestionsPage implements OnInit {
   getQuestions() {
     this.questionService.getQuestions().subscribe((res) => {
       if (res.status) {
-        this.questionList = res.data;
+        this.questionList = res.data.reverse();
         this.questionFilterList = this.questionList;
       }
     },

@@ -42,7 +42,7 @@
 
       <ion-item>
         <ion-label color="tertiary">Fecha de finalización:</ion-label>
-        <ion-datetime [(ngModel)]="event.dateEnd" name="dateEnd" displayFormat="MMMM DD, YYYY" display-timezone="utc" required></ion-datetime>
+        <ion-datetime [(ngModel)]="event.dateEnd" name="dateEnd" displayFormat="MMMM DD, YYYY" [max]="maxD" [min]="today" display-timezone="utc" required></ion-datetime>
       </ion-item>
       
       <ion-item>

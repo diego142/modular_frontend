@@ -14,32 +14,35 @@
 
 <ion-content>
 
-  <ion-slides>
+  <div style="margin-bottom: 5px;">
+    <ion-slides>
 
-    <ion-slide>
-      <img src="assets/icon/developers.gif" />
-      <h2>Desarrolladores</h2>
-      <p style="font-size: 24px;">Foro Qci fue desarrollado por:</p>
-      <p style="margin-bottom: 0px;">Diego Frias Acosta</p>
-      <p style="margin-top: 0px;">José Luis Sanchez Camacho</p>
-      <ion-icon slot="end" name="arrow-forward"></ion-icon>
-    </ion-slide>
+      <ion-slide>
+        <img src="assets/icon/developers.gif" />
+        <h2>Desarrolladores</h2>
+        <p style="font-size: 24px;">Foro Qci fue desarrollado por:</p>
+        <p style="margin-bottom: 0px;">Diego Frias Acosta</p>
+        <p style="margin-top: 0px;">José Luis Sanchez Camacho</p>
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-slide>
 
-    <ion-slide>
+      <ion-slide>
         <img src="assets/icon/ionicapp.png" />
         <h2>Ionic Framework</h2>
         <p> <b> Foro Qci </b> fue hecho con Ionic 6.11.3 para el lado del frontend </p>
         <ion-icon slot="end" name="arrow-forward"></ion-icon>
-    </ion-slide>
+      </ion-slide>
 
-    <ion-slide>
-      <img [src]="url"/>
-      <h2>{{head}}</h2>
-      <p> <b> Foro Qci </b> {{text}} </p>
-      <ion-button fill="clear" (click)="secret()">
-        <ion-icon color="light" name="gift"></ion-icon>
-      </ion-button>
-    </ion-slide>
+      <ion-slide>
+        <img [src]="url" />
+        <h2>{{head}}</h2>
+        <p> <b> Foro Qci </b> {{text}} </p>
+        <ion-button fill="clear" (click)="secret()">
+          <ion-icon color="light" name="gift"></ion-icon>
+        </ion-button>
+      </ion-slide>
 
-  </ion-slides>
+    </ion-slides>
+  </div>
+
 </ion-content>

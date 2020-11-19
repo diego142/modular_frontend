@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  URL: window.location.href,
+  URL: 'https://foroqci.herokuapp.com/foroqci/api/',
   production: false
 };
 

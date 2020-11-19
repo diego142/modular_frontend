@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'src/app/models/event';
 import { EventService } from 'src/app/services/event.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { Util } from 'src/app/models/util';
 
@@ -14,11 +14,12 @@ import { Util } from 'src/app/models/util';
 export class EventFormPage implements OnInit {
 
   today = new Date().toISOString();
+  maxD = new Date(2100, 1, 1).toISOString();
   id: string;
   event: Event = new Event();
 
   constructor(private activatedRoute: ActivatedRoute, private eventService: EventService,
-    private router: Router, private alertController: AlertController) { }
+    private router: Router, private alertController: AlertController, public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -60,33 +61,50 @@ export class EventFormPage implements OnInit {
     }
   }
 
-  createEvent() {
+  async createEvent() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
     this.event.dateStart = new Date();
     this.event.user._id = Util.getStorageUser()._id;
     this.event.open = true;
 
-    this.eventService.createEvent(this.event).subscribe((res) => {
+    this.eventService.createEvent(this.event).subscribe(async (res) => {
 
       if (res.status) {
         this.navigateAlert('¡EVENTO CREADO!', 'Creaste un nuevo evento', 'OK', 'events');
+        await loading.dismiss();
       } else {
-
         this.navigateAlert('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear el evento', 'OK', 'events');
+        await loading.dismiss();
       }
-    }, (err) => {
+    }, async (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'events');
+      await loading.dismiss();
     });
   }
 
-  updateEvent() {
-    this.eventService.updateEvent(this.event).subscribe((res) => {
+  async updateEvent() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
+    this.eventService.updateEvent(this.event).subscribe(async (res) => {
       if (res.status) {
         this.navigateAlert('¡EVENTO MODIFICADO!', 'Modificaste este evento', 'OK', 'events');
+        await loading.dismiss();
       } else {
         this.navigateAlert('¡ERROR AL MODIFICAR!', 'Hubo un problema al modificar este evento', 'OK', 'events');
+        await loading.dismiss();
       }
-    }, (err) => {
+    }, async (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'events');
+      await loading.dismiss();
     });
 
   }

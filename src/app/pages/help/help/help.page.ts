@@ -46,7 +46,7 @@ export class HelpPage implements OnInit {
     this.tagService.getTags().subscribe((res) => {
       if (res.status) {
         this.tagsList = res.data.filter(tag => tag.question.open === true);
-        this.tagsFilterList = this.tagsList;
+        this.tagsFilterList = this.tagsList.reverse();
       }
       event.target.complete();
 
@@ -60,7 +60,7 @@ export class HelpPage implements OnInit {
     this.tagService.getTags().subscribe((res) => {
       if (res.status) {
         this.tagsList = res.data.filter(tag => tag.question.open === true);
-        this.tagsFilterList = this.tagsList;
+        this.tagsFilterList = this.tagsList.reverse();
       }
 
     }, (err) => {

@@ -37,7 +37,7 @@ export class MyQuestionsPage implements OnInit {
 
   getQuestions() {
     this.questionService.getQuestionByUserId(this.user._id).subscribe((res) => {
-      this.myQuestions = res.data;
+      this.myQuestions = res.data.reverse();
 
     }, (err) => {
       console.log(err);

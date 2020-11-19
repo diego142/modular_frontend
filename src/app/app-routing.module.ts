@@ -83,15 +83,11 @@ const routes: Routes = [
     path: 'about', component: AboutComponent, canActivate: [AuthGuard]
   }
 
-
-
-
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   exports: [RouterModule]
 })
