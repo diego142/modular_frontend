@@ -80,8 +80,6 @@ export class QuestionViewPage implements OnInit {
     this.tagService.getTagByQuestionId(id).subscribe((res) => {
       if (res.status) {
         this.tag = res.data;
-        console.log(this.tag.tags);
-
       }
     }, (err) => {
       console.log(err);

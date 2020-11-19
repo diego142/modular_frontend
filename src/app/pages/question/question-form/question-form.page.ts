@@ -104,7 +104,7 @@ export class QuestionFormPage implements OnInit {
   }
 
   getClassifications(key: string) {
-    const size = this.question.title.length;
+    const size = (this.question.title) ? this.question.title.length : 0;
     if (size < 10) {
       this.labels = [];
       this.show = false;

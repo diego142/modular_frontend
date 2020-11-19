@@ -1,7 +1,7 @@
 <ion-menu menuId="main-menu" content-id="main" (ionWillOpen)="getInfoUser()">
   <ion-header>
     <ion-toolbar color="myAccent">
-      <ion-title color="myPrimaryText">Menú  {{ (user.permission == 1) ? '(Admin)' : ''}}</ion-title>
+      <ion-title color="myPrimaryText">Menú {{ (user.permission == 1) ? '(Admin)' : ''}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -61,6 +61,12 @@
   <ion-menu-toggle>
 
     <ion-footer>
+
+      <ion-item routerLink="/about" lines="none">
+        <ion-icon slot="start" color="medium" name="information-circle"></ion-icon>
+        <ion-label style="font-size: 16px; margin: 0px;" color="medium">Acerca de</ion-label>
+      </ion-item>
+
       <ion-button expand="full" color="myAccent" (click)="logOut()">
         <ion-icon name="exit-outline" slot="start" color="light"></ion-icon>
         Salir

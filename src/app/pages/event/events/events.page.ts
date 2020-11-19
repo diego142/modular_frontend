@@ -15,7 +15,7 @@ export class EventsPage implements OnInit {
 
   user = new User();
 
-  constructor(private eventService: EventService, private router: Router, private alertController: AlertController,
+  constructor(public eventService: EventService, private router: Router, private alertController: AlertController,
     private toastController: ToastController) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;

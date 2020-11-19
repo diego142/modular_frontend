@@ -13,7 +13,7 @@ import { Util } from 'src/app/models/util';
 })
 export class EventFormPage implements OnInit {
 
-  private today = new Date().toISOString();
+  today = new Date().toISOString();
   id: string;
   event: Event = new Event();
 
@@ -64,8 +64,6 @@ export class EventFormPage implements OnInit {
     this.event.dateStart = new Date();
     this.event.user._id = Util.getStorageUser()._id;
     this.event.open = true;
-
-    console.log(this.event);
 
     this.eventService.createEvent(this.event).subscribe((res) => {
 

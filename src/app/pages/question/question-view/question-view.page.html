@@ -56,7 +56,7 @@
       <ion-avatar slot="start">
         <img src="assets/icon/avatar.png">
       </ion-avatar>
-      <ion-button *ngIf="reply.user._id == userId" slot="end" color="danger" (click)="confirmRemoveReply(reply._id)">
+      <ion-button *ngIf="reply.user._id == user._id" slot="end" color="danger" (click)="confirmRemoveReply(reply._id)">
         <ion-icon name="trash"></ion-icon>
       </ion-button>
       <ion-label class="ion-text-wrap">
@@ -78,7 +78,7 @@
   <form *ngIf="question.open; else elseForm" #formReply="ngForm">
     <ion-item>
       <ion-avatar slot="start">
-        <img src="https://i.ytimg.com/vi/esJOOQG42r0/maxresdefault.jpg">
+        <img src="assets/icon/avatar.png">
       </ion-avatar>
       <ion-textarea rows="3" placeholder="Respoder a esta pregunta" name="reply" [(ngModel)]="reply.reply" minlength="2"
         required></ion-textarea>
