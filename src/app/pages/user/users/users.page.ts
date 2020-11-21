@@ -97,6 +97,16 @@ export class UsersPage implements OnInit {
     });
   }
 
+  getReloadUsers(event) {
+    this.userService.getUsers().subscribe((res) => {
+      this.usersList = res.data;
+      event.target.complete();
+    }, (err) => {
+      console.log(err);
+      event.target.complete();
+    });
+  }
+
   changePermission(pmsn: number, id: string) {
     this.userService.updatePermission(pmsn, id).subscribe((res) => {
       if (res.status) {

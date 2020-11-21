@@ -14,8 +14,12 @@
 
 <ion-content class="ios">
 
-  <ion-list>
+  <ion-refresher slot="fixed" (ionRefresh)="getReloadUsers($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
 
+  <ion-list>
     <ion-item *ngFor="let user of usersList">
 
       <ion-thumbnail  slot="end" class="ion-text-wrap ion-text-right">

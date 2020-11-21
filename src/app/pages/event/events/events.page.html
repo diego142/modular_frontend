@@ -27,6 +27,11 @@
     </ion-card>
   </div>
 
+  <ion-refresher slot="fixed" (ionRefresh)="getReloadEvents($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
 
     <ion-text *ngIf="eventService.eventList.length < 1" color="medium">

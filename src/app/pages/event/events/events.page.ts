@@ -17,14 +17,13 @@ export class EventsPage implements OnInit {
   loading: any;
 
   constructor(public eventService: EventService, private router: Router, private alertController: AlertController,
-    private toastController: ToastController, public loadingController: LoadingController) {
+              private toastController: ToastController, public loadingController: LoadingController) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
   }
 
   ngOnInit() {
-
   }
 
   ionViewWillEnter() {
@@ -59,7 +58,6 @@ export class EventsPage implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
 
@@ -76,6 +74,16 @@ export class EventsPage implements OnInit {
     }, async (err) => {
       this.toast('Problema al conectar la servidor.');
       await loading.dismiss();
+    });
+  }
+
+  getReloadEvents(event) {
+    this.eventService.getEvents().subscribe((res) => {
+      this.eventService.eventList = res.data;
+      event.target.complete();
+    }, (err) => {
+      this.toast('Problema al conectar la servidor.');
+      event.target.complete();
     });
   }
 

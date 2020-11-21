@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Question } from 'src/app/models/question';
 import { QuestionService } from 'src/app/services/question.service';
 import { Router, NavigationEnd } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { Util } from 'src/app/models/util';
 
@@ -17,7 +17,8 @@ export class MyQuestionsPage implements OnInit {
   myQuestions: Question[] = new Array<Question>();
 
   constructor(private questionService: QuestionService, private router: Router,
-              private alertController: AlertController, private toastController: ToastController) { }
+              private alertController: AlertController, private toastController: ToastController,
+              public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -35,13 +36,20 @@ export class MyQuestionsPage implements OnInit {
     toast.present();
   }
 
-  getQuestions() {
+  async getQuestions() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
     this.questionService.getQuestionByUserId(this.user._id).subscribe((res) => {
       this.myQuestions = res.data.reverse();
+      loading.dismiss();
 
     }, (err) => {
       console.log(err);
-
+      loading.dismiss();
     });
   }
 

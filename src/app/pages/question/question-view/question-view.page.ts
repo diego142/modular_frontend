@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Question } from 'src/app/models/question';
 import { QuestionService } from 'src/app/services/question.service';
 import { Reply } from 'src/app/models/reply';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { Util } from 'src/app/models/util';
 import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
@@ -26,7 +26,8 @@ export class QuestionViewPage implements OnInit {
   reply = new Reply();
 
   constructor(private activatedRoute: ActivatedRoute, private questionService: QuestionService, private tagService: TagService,
-    private router: Router, private alertController: AlertController, private toastController: ToastController) { }
+    private router: Router, private alertController: AlertController, private toastController: ToastController,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -35,7 +36,7 @@ export class QuestionViewPage implements OnInit {
     this.questionId = this.activatedRoute.snapshot.params.id;
     this.getQuestion(this.questionId);
     this.getTag(this.questionId);
-    
+
     this.user = Util.getStorageUser();
   }
 
@@ -64,15 +65,37 @@ export class QuestionViewPage implements OnInit {
     });
   }
 
-  getQuestion(id: string) {
+  async getQuestion(id: string) {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
     this.questionService.getQuestionById(id).subscribe((res) => {
       if (res.status) {
         this.question = res.data;
       } else {
         this.navigateAlert('¡ERROR AL OBTENER!', 'Hubo un problema al intentar obtener la informacion de esta pregunta', 'OK', 'questions');
       }
+      loading.dismiss();
     }, (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'questions');
+      loading.dismiss();
+    });
+  }
+
+  getReloadQsn(event) {
+    this.questionService.getQuestionById(this.questionId).subscribe((res) => {
+      if (res.status) {
+        this.question = res.data;
+      } else {
+        this.navigateAlert('¡ERROR AL OBTENER!', 'Hubo un problema al intentar obtener la informacion de esta pregunta', 'OK', 'questions');
+      }
+      event.target.complete();
+    }, (err) => {
+      this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'questions');
+      event.target.complete();
     });
   }
 

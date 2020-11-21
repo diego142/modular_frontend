@@ -13,6 +13,11 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="getReloadQsn($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-card>
     <ion-item color="myPrimary">
       <ion-avatar slot="start">

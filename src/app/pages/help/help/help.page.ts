@@ -5,6 +5,7 @@ import { TagService } from 'src/app/services/tag.service';
 import { Tag } from 'src/app/models/tag';
 import { NavigationEnd, Router } from '@angular/router';
 import { Util } from 'src/app/models/util';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-help',
@@ -20,7 +21,8 @@ export class HelpPage implements OnInit {
   showMsg = false;
   userId: string;
 
-  constructor(private branchService: BranchService, private tagService: TagService, private router: Router) { }
+  constructor(private branchService: BranchService, private tagService: TagService, private router: Router,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -56,16 +58,22 @@ export class HelpPage implements OnInit {
     });
   }
 
-  getTags() {
-    this.tagService.getTags().subscribe((res) => {
+  async getTags() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
+    this.tagService.getTags().subscribe(async (res) => {
       if (res.status) {
         this.tagsList = res.data.filter(tag => tag.question.open === true);
         this.tagsFilterList = this.tagsList.reverse();
       }
-
-    }, (err) => {
+      await loading.dismiss();
+    }, async (err) => {
       console.log(err);
-
+      await loading.dismiss();
     });
   }
 

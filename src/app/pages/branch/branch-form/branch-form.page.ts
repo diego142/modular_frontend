@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Branch } from 'src/app/models/branch';
 import { BranchService } from 'src/app/services/branch.service';
 
@@ -14,7 +14,7 @@ export class BranchFormPage implements OnInit {
   id: string;
   branch = new Branch();
   constructor(private activatedRoute: ActivatedRoute, private branchService: BranchService,
-    private alertController: AlertController, private router: Router) { }
+    private alertController: AlertController, private router: Router, public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -55,27 +55,45 @@ export class BranchFormPage implements OnInit {
     }
   }
 
-  createBranch() {
-    this.branchService.createBranch(this.branch).subscribe((res) => {
+  async createBranch() {
+
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
+    this.branchService.createBranch(this.branch).subscribe(async (res) => {
       if (res.status) {
         this.navigateAlert('RAMA CREADA!', 'Creaste una nueva rama', 'OK', 'branches');
       } else {
         this.navigateAlert('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear la rama', 'OK', 'branches');
       }
-    }, (err) => {
+      await loading.dismiss();
+    }, async (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'events');
+      await loading.dismiss();
     });
   }
 
-  updateBranch() {
-    this.branchService.updateBranch(this.branch).subscribe((res) => {
+  async updateBranch() {
+
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+    this.branchService.updateBranch(this.branch).subscribe(async (res) => {
       if (res.status) {
         this.navigateAlert('!RAMA MODIFICADA!', 'Modificaste esta rama', 'OK', 'branches');
       } else {
         this.navigateAlert('¡ERROR AL MODIFICAR!', 'Hubo un problema al modificar esta rama', 'OK', 'branch');
       }
-    }, (err) => {
+      await loading.dismiss();
+
+    }, async (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'branch');
+      await loading.dismiss();
     });
   }
 

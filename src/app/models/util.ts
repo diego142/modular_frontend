@@ -1,3 +1,4 @@
+import { LoadingController } from '@ionic/angular';
 import { Skill } from './skill';
 import { User } from './user';
 
@@ -36,8 +37,6 @@ export class Util {
     public static removeStorageSkill() {
         localStorage.removeItem('skills_info');
     }
-
-
 
 
 }

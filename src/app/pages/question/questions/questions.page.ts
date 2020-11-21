@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from 'src/app/services/question.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Question } from 'src/app/models/question';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-questions',
@@ -12,7 +13,8 @@ export class QuestionsPage implements OnInit {
 
   questionList: Question[] = new Array<Question>();
   questionFilterList: Question[] = new Array<Question>();
-  constructor(private questionService: QuestionService, private router: Router) { }
+  constructor(private questionService: QuestionService, private router: Router,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -21,28 +23,50 @@ export class QuestionsPage implements OnInit {
     this.getQuestions();
   }
 
-  getQuestions() {
+  async getQuestions() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
     this.questionService.getQuestions().subscribe((res) => {
       if (res.status) {
         this.questionList = res.data.reverse();
         this.questionFilterList = this.questionList;
       }
+      loading.dismiss();
     },
       (err) => {
+        console.log(err);
+        loading.dismiss();
+      });
+  }
+
+  getReloadQns(event) {
+    this.questionService.getQuestions().subscribe((res) => {
+      if (res.status) {
+        this.questionList = res.data.reverse();
+        this.questionFilterList = this.questionList;
+        event.target.complete();
+      }
+    },
+      (err) => {
+        event.target.complete();
         console.log(err);
       });
   }
 
   findQuestion(quest: string) {
-      quest = quest.trim();
-      const regExp = new RegExp(quest, 'i');
-      this.questionFilterList = [];
-  
-      for (const qtn of this.questionList) {
-        if (qtn.title.match(regExp)) {
-          this.questionFilterList.push(qtn);
-        }
+    quest = quest.trim();
+    const regExp = new RegExp(quest, 'i');
+    this.questionFilterList = [];
+
+    for (const qtn of this.questionList) {
+      if (qtn.title.match(regExp)) {
+        this.questionFilterList.push(qtn);
       }
+    }
   }
 
   viewQuestion(id: string) {

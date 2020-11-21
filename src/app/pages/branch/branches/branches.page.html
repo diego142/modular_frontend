@@ -13,6 +13,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="getReloadBranches($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-card *ngFor="let branch of branchList">
     <ion-card-header color="headerColor" style="margin-bottom: 10px; padding: 10px;">
       <ion-card-title>

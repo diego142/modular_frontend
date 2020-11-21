@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Branch } from 'src/app/models/branch';
 import { User } from 'src/app/models/user';
 import { Util } from 'src/app/models/util';
@@ -17,8 +17,8 @@ export class BranchesPage implements OnInit {
   branchList = new Array<Branch>();
 
   constructor(private branchService: BranchService,
-              private alertController: AlertController,
-              private router: Router) { }
+    private alertController: AlertController,
+    private router: Router,  public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -28,20 +28,40 @@ export class BranchesPage implements OnInit {
     this.getBranches();
   }
 
-  getBranches() {
-    this.branchService.getBranches().subscribe((res) => {
+  async getBranches() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
+    this.branchService.getBranches().subscribe(async (res) => {
       if (res.status) {
         this.branchList = res.data;
       }
+      await loading.dismiss();
+    }, async (err) => {
+      console.log(err);
+      await loading.dismiss();
+    });
+  }
+
+  getReloadBranches(event) {
+    this.branchService.getBranches().subscribe((res) => {
+      if (res.status) {
+        this.branchList = res.data;
+        event.target.complete();
+      }
     }, (err) => {
       console.log(err);
+      event.target.complete();
     });
   }
 
   deleteBranch(id: string) {
     this.branchService.deleteBranch(id).subscribe((res) => {
       if (res.status) {
-        const ind  = this.branchList.findIndex(branch => branch._id === res.data._id);
+        const ind = this.branchList.findIndex(branch => branch._id === res.data._id);
         this.branchList.splice(ind, 1);
       }
     }, (err) => {

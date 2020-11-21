@@ -31,6 +31,11 @@
     </ion-card>
   </div>
 
+  <ion-refresher slot="fixed" (ionRefresh)="getReloadQns($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+  
   <ion-list>
 
     <ion-text *ngIf="questionFilterList.length < 1" color="medium">

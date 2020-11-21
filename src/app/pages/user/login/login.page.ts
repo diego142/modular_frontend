@@ -3,7 +3,7 @@ import { User } from 'src/app/models/user';
 import { Util } from 'src/app/models/util';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { MenuComponent } from 'src/app/components/menu/menu.component';
 import { SkillsService } from 'src/app/services/skills.service';
@@ -15,13 +15,14 @@ import { SkillsService } from 'src/app/services/skills.service';
 })
 export class LoginPage implements OnInit {
 
-  user = new User();
+  user: User = new User();
 
   constructor(private userService: UserService, private router: Router,
     public toastController: ToastController, private alertController: AlertController,
-    private skillService: SkillsService) { }
+    private skillService: SkillsService, public loadingController: LoadingController) { }
 
   ngOnInit() {
+
   }
 
   async errorLogin(head: string, subHead: string, btnTex: string, navigate: string) {
@@ -59,30 +60,41 @@ export class LoginPage implements OnInit {
     });
   }
 
-  verifyUser() {
+  async verifyUser() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
     this.userService.getUser(this.user.email).subscribe((res) => {
       if (res.data == null) {
         this.toast('Email no registrado!', 'Intenta de nuevo o crea una cuenta para poder entrar!', 3000);
         this.router.navigate(['/login']);
         this.user.email = '';
         this.user.password = '';
+        loading.dismiss();
       } else {
         if (res.data.password === this.user.password) {
           this.toast('Bienvenido al foro', '', 1000);
-          
+
           Util.setStorageUser(res.data);
           this.getSkill(res.data._id);
 
           this.router.navigate(['/events']);
+
         } else {
           this.toast('Contraseña incorrecta!', 'La contraseña que ingreso no coincide con el email', 2000);
           this.router.navigate(['/login']);
           this.user.password = '';
         }
+        loading.dismiss();
       }
     },
       (err) => {
         this.errorLogin('ERROR DE SERVIDOR', err.message, 'OK', 'login');
+        loading.dismiss();
+
       }
     );
   }

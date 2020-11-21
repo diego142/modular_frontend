@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Question } from 'src/app/models/question';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { QuestionService } from 'src/app/services/question.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { NlService } from 'src/app/services/nl.service';
 import { Label } from 'src/app/models/label';
 import { User } from 'src/app/models/user';
@@ -26,7 +26,7 @@ export class QuestionFormPage implements OnInit {
   questionList: Question[];
 
   constructor(private activatedRoute: ActivatedRoute, private questionService: QuestionService,
-    private router: Router, private alertController: AlertController,
+    private router: Router, private alertController: AlertController, public loadingController: LoadingController,
     private nlService: NlService) { }
 
   ngOnInit() {
@@ -59,7 +59,13 @@ export class QuestionFormPage implements OnInit {
     await alert.present();
   }
 
-  createQuestion() {
+  async createQuestion() {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
+    await loading.present();
+
     this.question.user._id = this.user._id;
     this.question.date = new Date();
     this.question.open = true;
@@ -70,8 +76,10 @@ export class QuestionFormPage implements OnInit {
       } else {
         this.navigateAlert('¡ERROR AL CREAR!', 'Hubo un problema al intentar crear esta pregunta', 'OK', 'my-questions');
       }
+      loading.dismiss();
     }, (err) => {
       this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'my-questions');
+      loading.dismiss();
     });
   }
 
@@ -87,16 +95,23 @@ export class QuestionFormPage implements OnInit {
     });
   }
 
-  getQuestion(id: string) {
+  async getQuestion(id: string) {
+    const loading = await this.loadingController.create({
+      message: 'Porfavor espere...',
+    });
+
     if (id !== '0') {
+      await loading.present();
       this.questionService.getQuestionById(id).subscribe((res) => {
         if (res.status) {
           this.question = res.data;
         } else {
           this.navigateAlert('¡ERROR AL OBTENER!', 'Hubo un problema al intentar obtener la informacion de esta pregunta', 'OK', 'my-questions');
         }
+        loading.dismiss();
       }, (err) => {
         this.navigateAlert('ERROR DE SERVIDOR', err.message, 'OK', 'my-questions');
+        loading.dismiss();
       });
     } else {
       this.question = new Question();
